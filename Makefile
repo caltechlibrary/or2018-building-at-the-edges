@@ -24,5 +24,7 @@ save:
 publish: build
 	bash publish.bash
 
+spellcheck: FORCE
+	aspell -c building-software-at-the-edges.md
 	
 FORCE:

@@ -28,7 +28,7 @@ tool projects.
 + [dataset](https://github.com/caltechlibrary/dataset)
 	+ storing, retrieving, manage JSON documents on disc and in the cloud
 + [mkpage](https://github.com/caltechlibrary/mkpage)
-	+ A diconstructed web content management system
+	+ A deconstructed web content management system
 
 --
 
@@ -47,7 +47,7 @@ Caltech Library has a heterogeneous mix of repository systems
 + [ArchivesSpace](http://archivesspace.org/) - Java/jRuby/MySQL
 	+ Collection management for https://archives.caltech.edu
 
-Lots of languages to support. No single system fullfilled our needs.
+Lots of languages to support. No single system fulfills our needs.
 
 Development became limited to configuration, customization, writing plugins or modules for a given system.
 
