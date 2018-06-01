@@ -9,7 +9,7 @@
 <a id="start-slide" href="00-building-software-at-the-edges.html">Home</a>
 <a id="prev-slide" href="01-building-software-at-the-edges.html">Prev</a>
 <a id="next-slide" href="03-building-software-at-the-edges.html">Next</a>
-<a id="end-slide" href="19-building-software-at-the-edges.html">End</a>
+<a id="end-slide" href="17-building-software-at-the-edges.html">End</a>
 </nav>
 
 <section class="slide">
@@ -18,14 +18,33 @@
 <p>Caltech Library has a heterogeneous mix of repository systems</p>
 
 <ul>
-<li><a href="http://www.eprints.org/uk">EPrints</a> - <a href="https://authors.library.caltech.edu">CaltechAUTHORS</a>, <a href="https://thesis.library.caltech.edu">CaltechTHESIS</a></li>
-<li><a href="http://invenio-software.org/">Invenio</a> - <a href="https://data.caltech.edu">CaltechDATA</a></li>
-<li><a href="https://www.islandora.ca/">Islandora</a> - various image repositories</li>
-<li><a href="http://archivesspace.org/">ArchivesSpace</a> -  for Archive collection management</li>
-<li>&hellip;</li>
+<li><a href="http://www.eprints.org/uk">EPrints</a> - Apache/Perl/MySQL + EPrints Markup
+
+<ul>
+<li><a href="https://authors.library.caltech.edu">CaltechAUTHORS</a>,</li>
+<li><a href="https://thesis.library.caltech.edu">CaltechTHESIS</a></li>
+</ul></li>
+<li><a href="http://invenio-software.org/">Invenio</a> - Apache/Python/MySQL
+
+<ul>
+<li><a href="https://data.caltech.edu">CaltechDATA</a></li>
+<li>Hosted by tind.io</li>
+</ul></li>
+<li><a href="https://www.islandora.ca/">Islandora</a> - Apache/PHP (Drupal)/MySQL + tomcat and Fedora Repository
+
+<ul>
+<li>Various image repositories for <a href="https://archives.caltech.edu">https://archives.caltech.edu</a></li>
+</ul></li>
+<li><a href="http://archivesspace.org/">ArchivesSpace</a> - Java/jRuby/MySQL
+
+<ul>
+<li>Collection management for <a href="https://archives.caltech.edu">https://archives.caltech.edu</a></li>
+</ul></li>
 </ul>
 
-<p>Development was limited to configuration, customization, writing plugins or modules.</p>
+<p>Lots of languages to support. No single system fullfilled our needs.</p>
+
+<p>Development became limited to configuration, customization, writing plugins or modules for a given system.</p>
 
 <p>And all systems eventually became legacy systems over time&hellip;</p>
 </div>
