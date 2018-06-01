@@ -9,40 +9,36 @@
 <a id="start-slide" href="00-building-software-at-the-edges.html">Home</a>
 <a id="prev-slide" href="15-building-software-at-the-edges.html">Prev</a>
 <a id="next-slide" href="17-building-software-at-the-edges.html">Next</a>
-<a id="end-slide" href="18-building-software-at-the-edges.html">End</a>
+<a id="end-slide" href="19-building-software-at-the-edges.html">End</a>
 </nav>
 
 <section class="slide">
     <div class="slide"><h1>Use case</h1>
 
-<p>(internal facing)</p>
+<h2>feeds.library.caltech.edu</h2>
 
-<h2>Data import and enhancement</h2>
+<p>Building an aggregated view of our repositories</p>
 
-<ul>
-<li>Vendor supplied data in XLSX format (1Science)</li>
-<li>Need to create an set of EPrint XML documents to import</li>
-</ul>
-
-<p>Problem is a model for enhancement in general. We plan to use
-this approach in batch adding ORCID, normalizing Funder names, etc.</p>
-
-<h3>Harvest</h3>
+<h3>Harvesting</h3>
 
 <ul>
-<li>xlsx2csv (from <a href="https://caltechlibrary.github.io/datatools">datatools</a></li>
+<li>cURL (for exploring API)</li>
+<li>Go and Python based utilities</li>
+<li>Store results as JSON (plus attachments if needed) in
+a dataset collection(s)</li>
 </ul>
 
 <h3>Transformation</h3>
 
 <ul>
-<li>Python and <a href="https://caltechlibrary.github.io/dataset">dataset</a></li>
+<li>Bash/Python scripts</li>
+<li><a href="https://caltechlibrary.github.io/dataset">dataset</a></li>
 </ul>
 
-<h4>Redeploy</h4>
+<h3>Redeploy</h3>
 
 <ul>
-<li>Build EPrint XML documents for import with Python and <a href="https://caltechlibrary.github.io/dataset">dataset</a> and <a href="https://caltechlibrary.github.io/mkpage">mkpage</a></li>
+<li><a href="https://caltechlibrary.github.io/dataset">dataset</a>, Python and <a href="https://caltechlibrary.github.io/mkpage">mkpage</a></li>
 </ul>
 
 <!-- DEMO HERE -->

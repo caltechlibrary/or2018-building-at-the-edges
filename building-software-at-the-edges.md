@@ -139,7 +139,7 @@ Our experience has shown us
 
 --
 
-# Continuous Migration in practice
+# Continuous Migration, in practice
 
 + Prefer Web API over direct SQL access to DB
 + Take a "data science" approach to the problem solving
@@ -164,7 +164,7 @@ Our experience has shown us
 
 + [datatools](https://caltechlibrary.github.io/datatools/) for processing data and prototyping data flows
 + [dataset](https://caltechlibrary.github.io/dataset/) for holding copies of data during processing and between steps in a data pipeline
-+ [mkpage](https://caltechlibrary.github.io/mkpage/) a JSON friendly rendering engine
++ [mkpage](https://caltechlibrary.github.io/mkpage/) a JSON friendly rendering engine and terribly simple web server
 
 --
 
@@ -201,6 +201,18 @@ Need to create a simple show and tell of extracting something from a XLSX workbo
 Flip into a JSON collection and then join with data harvested from :w
 
 -->
+
+--
+
+# mkpage
+
+A "page" level content system and a terribly simple static web server
+
+This is the web production and service side of feeds.library.caltech.edu
+
++ Markdown friendly
++ JSON friendly
++ simple set of tools to script a content system 
 
 --
 
