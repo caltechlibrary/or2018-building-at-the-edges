@@ -13,7 +13,7 @@ https://caltechlibrary.github.io/or2018-building-at-the-edges
 # Overview
 
 Caltech Library has shifted from a system centric to a data centric
-approach in developing software. This lead to two concepts and two
+approach in developing software. This lead to two concepts and three
 tool projects.
 
 ## Concepts
@@ -160,7 +160,7 @@ Our experience has shown us
 
 --
 
-# Which brings us to two tool projects...
+# Which brings us to three tool projects...
 
 + [datatools](https://caltechlibrary.github.io/datatools/) for processing data and prototyping data flows
 + [dataset](https://caltechlibrary.github.io/dataset/) for holding copies of data during processing and between steps in a data pipeline
@@ -170,7 +170,7 @@ Our experience has shown us
 
 # [datatools](https://caltechlibrary.github.io/datatools/)
 
-Working at the edges has lead us to develop two open source collections of tools.  The first is _datatools_.
+Working at the edges has lead us to develop three open source tools projects.  The first is _datatools_.
 
 The goal of _datatools_ is to ease working with CSV, XLSX Workbooks and JSON documents on the command line or in Bash scripts. These include
 
