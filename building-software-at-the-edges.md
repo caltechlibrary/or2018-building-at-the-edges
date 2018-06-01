@@ -5,6 +5,9 @@ R. S. Doiel, Caltech Library, rsdoiel@library.caltech.edu
 
 Thomas Morrell, Caltech Library, tomorrell@caltech.edu
 
+https://caltechlibrary.github.io/or2018-building-at-the-edges
+
+
 --
 
 # Overview
@@ -282,3 +285,4 @@ this approach in batch adding ORCID, normalizing Funder names, etc.
 R. S. Doiel, rsdoiel@library.caltech.edu
 Thomas Morrell, Caltech Library, tomorrell@caltech.edu
 
+https://caltechlibrary.github.io/or2018-building-at-the-edges
