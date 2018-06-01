@@ -177,7 +177,7 @@ Bash/Python plus these three projects evolved from migrating
 systems and data, data analysis of our collections and 
 building an aggregated view of EPrints and Invenio content
 
-	https://feeds.library.caltech.edu
+**https://feeds.library.caltech.edu**
 
 --
 
@@ -227,7 +227,7 @@ to render
 + [mkpage](https://caltechlibrary.github.io/mkpage)
 	+ https://github.com/caltechlibrary/mkpage/releases/latest
 
-We have compiled versions for Mac, Windows (on Intel),
+Compiled versions for Mac, Windows,
 Linux and Raspberry Pi!
 
 --
