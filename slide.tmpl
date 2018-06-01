@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {{ with .title -}}<title>{{- . -}}</title>{{- end }}
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+<nav>
+{{ if ne .cur_no .first_no -}}
+<a id="start-slide" href="{{printf "%02d-%s.html" .first_no .filename}}">Home</a>
+{{- else -}}
+<span id="start-slide" >Home</span>
+{{- end }}
+{{ if gt .cur_no .first_no -}} 
+<a id="prev-slide" href="{{printf "%02d-%s.html" .prev_no .filename}}">Prev</a>
+{{- else -}}
+<span id="prev-slide" >Prev</span>
+{{- end}}
+{{ if lt .cur_no .last_no -}} 
+<a id="next-slide" href="{{printf "%02d-%s.html" .next_no .filename}}">Next</a>
+{{- else -}}
+<span id="next-slide" >Next</span>
+{{- end}}
+{{ if ne .cur_no .last_no -}}
+<a id="end-slide" href="{{printf "%02d-%s.html" .last_no .filename}}">End</a>
+{{- else -}}
+<span id="end-slide" >End</span>
+{{- end }}
+</nav>
+
+<section class="slide">
+    <div class="slide">{{ .content }}</div>
+</section>
+
+<footer>
+<span><h1><A href="https://caltech.edu">Caltech</a></h1></span>
+<span>&copy; 2018 <a href="https://www.library.caltech.edu/copyright">Caltech library</a></span>
+<address>1200 E California Blvd, Mail Code 1-32, Pasadena, CA 91125-3200</address>
+<span>Phone: <a href="tel:+1-626-395-3405">(626)395-3405</a></span>
+<span><a href="mailto:library@caltech.edu">Email Us</a></span>
+</footer>
+
+<script>
+(function (document, window) {
+    'use strict';
+    var start = document.getElementById('start-slide'),
+        prev = document.getElementById('prev-slide'),
+        next = document.getElementById('next-slide'),
+        end = document.getElementById('end-slide');
+    
+    window.addEventListener("keydown", function(e) {
+        switch (e.key) {
+        case "PageDown":
+        case "ArrowRight":
+        case "ArrowDown":
+        case "Enter":
+        case " ":
+            if (next != null) {
+                next.click();
+            }
+            break;
+        case "PageUp":
+        case "ArrowLeft":
+        case "ArrowUp":
+        case "Backspace":
+            if (prev != null) {
+                prev.click();
+            }
+            break;
+        case "Home":
+            if (start != null) {
+                start.click();
+            }
+            break;
+        case "End":
+            if (end != null) {
+                end.click();
+            }
+            break;
+        default:
+            return;
+        }
+        e.preventDefault();
+    }, true);
+}(document, window));
+</script>
+</body>
+</html>
