@@ -161,7 +161,7 @@ But if you need to work with a large number of JSON objects ...
 + store on local disc or in cloud (e.g. S3, GCS)
 + Move between trees and grids
 
-# mkpage
+# [mkpage](https://caltechlibrary.github.io/mkpage)
 
 A "page" level content system including a terribly simple static web server
 
