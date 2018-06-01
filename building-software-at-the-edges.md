@@ -21,11 +21,14 @@ tool projects.
 + Developing software at the edges
 + Continuous Migration
 
-## Open Source Repos
+## Open Source Projects
 
-+ [dataset](https://github.com/caltechlibrary/dataset)
 + [datatools](https://github.com/caltechlibrary/datatools)
-+ [mkpage](https://github.com/caltechlibrary/mkpage) (JSON friendly template engine)
+	+ tools to help converting and extracting data a the command line easier
++ [dataset](https://github.com/caltechlibrary/dataset)
+	+ storing, retrieving, manage JSON documents on disc and in the cloud
++ [mkpage](https://github.com/caltechlibrary/mkpage)
+	+ A diconstructed web content management system
 
 --
 
@@ -33,29 +36,22 @@ tool projects.
 
 Caltech Library has a heterogeneous mix of repository systems 
 
-+ [EPrints](http://www.eprints.org/uk) - [CaltechAUTHORS](https://authors.library.caltech.edu), [CaltechTHESIS](https://thesis.library.caltech.edu)
-+ [Invenio](http://invenio-software.org/) - [CaltechDATA](https://data.caltech.edu)
-+ [Islandora](https://www.islandora.ca/) - various image repositories
-+ [ArchivesSpace](http://archivesspace.org/) -  for Archive collection management
-+ ...
++ [EPrints](http://www.eprints.org/uk) - Apache/Perl/MySQL + EPrints Markup
+	+ [CaltechAUTHORS](https://authors.library.caltech.edu), 
+	+ [CaltechTHESIS](https://thesis.library.caltech.edu)
++ [Invenio](http://invenio-software.org/) - Apache/Python/MySQL
+	+ [CaltechDATA](https://data.caltech.edu)
+	+ Hosted by tind.io
++ [Islandora](https://www.islandora.ca/) - Apache/PHP (Drupal)/MySQL + tomcat and Fedora Repository
+	+ Various image repositories for https://archives.caltech.edu
++ [ArchivesSpace](http://archivesspace.org/) - Java/jRuby/MySQL
+	+ Collection management for https://archives.caltech.edu
 
-Development was limited to configuration, customization, writing plugins or modules. 
+Lots of languages to support. No single system fullfilled our needs.
+
+Development became limited to configuration, customization, writing plugins or modules for a given system.
 
 And all systems eventually became legacy systems over time...
-
---
-
-# Our Problem
-
-Look at the variety of code we need to maintain...
-
-+ [EPrints](http://www.eprints.org/uk) - Perl/SQL/EPrint markup
-+ [Invenio](http://invenio-software.org/) - Python/SQL
-+ [Islandora](https://www.islandora.ca/) - PHP/SQL/Java
-+ [ArchivesSpace](http://archivesspace.org/) - Java/jRuby/SQL
-+ ...
-
-Not to mention build/deployment code, the usual HTML, CSS, JavaScript required in any web based software. It becomes a bit much.
 
 --
 
@@ -81,26 +77,12 @@ Not to mention build/deployment code, the usual HTML, CSS, JavaScript required i
 	rather than inside separate systems in separate languages
 ```
 
-Developing at the edges works for our new as well as legacy systems
-
 --
 
 # What do I mean by development at the edges?
 
 + API are the edge of a system
 + We choose to focus on data model and data flow via API
-
-Common directions of data flow
-
-```
-    A data flow might be from one system to another
-
-    A data flow might be round trip by way of augmentation/transformation
-
-    A data flow might be for aggregation
-```
-
---
 
 # Development at the edges in practice
 
@@ -120,12 +102,11 @@ Practicing this showed us **Continuous Migration**
 
 # Advantages
 
-+ Ensures you know how to capture everything needed
++ Ensures you know how to capture everything needed for preservation
 + By capturing what you need in an ongoing basis you
   lower the cost of picking a better tool in the future
-+ Can help and be informed by your preservation and 
-  disaster recovery strategies
 + Makes it easier to setup test systems using real data
++ Lowers the cost/expectation on a given system letting last longer
 
 --
 
@@ -137,11 +118,8 @@ Our experience has shown us
 + Sustainability of data is enhanced by simple structures
 + Data sustainability may be easier to achieve than software sustainability
 
---
+Which allows us to
 
-# Continuous Migration, in practice
-
-+ Prefer Web API over direct SQL access to DB
 + Take a "data science" approach to the problem solving
     + Leverage existing tools
     + Build purpose driven tools when required
@@ -150,9 +128,9 @@ Our experience has shown us
 
 --
 
-# Continuous Migration, lessons learned
+# Continuous Migration,
 
-## A really common pattern
+## A really common implementation pattern
 
 + Harvest
 + Transform
@@ -206,13 +184,19 @@ Flip into a JSON collection and then join with data harvested from :w
 
 # mkpage
 
-A "page" level content system and a terribly simple static web server
-
-This is the web production and service side of feeds.library.caltech.edu
+A "page" level content system including a terribly simple static web server
 
 + Markdown friendly
 + JSON friendly
 + simple set of tools to script a content system 
+
+--
+
+# Evolving the right tools
+
+Bash/Python plus these three projects evolved out or migrating systems and data, data analysis of our collections and building
+
+	https://feeds.library.caltech.edu
 
 --
 
