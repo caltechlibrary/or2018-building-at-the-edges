@@ -16,7 +16,7 @@ tool projects.
 ## Concepts
 
 + Developing software at the edges
-+ Continious Migration
++ Continuous Migration
 
 ## Open Source Repos
 
@@ -48,7 +48,7 @@ Look at the variety of code we need to maintain...
 
 + [EPrints](http://www.eprints.org/uk) - Perl/SQL/EPrint markup
 + [Invenio](http://invenio-software.org/) - Python/SQL
-+ [Islandora](https://www.islandora.ca/) - Php/SQL/Java
++ [Islandora](https://www.islandora.ca/) - PHP/SQL/Java
 + [ArchivesSpace](http://archivesspace.org/) - Java/jRuby/SQL
 + ...
 
@@ -173,7 +173,7 @@ The goal of _datatools_ is to ease working with CSV, XLSX Workbooks and JSON doc
 
 + csv2json, csvcleaner, csv2mdtable, csvfind, csvjoin, csv2xlsx
 + jsonjoin, jsonmunge, jsonrange (for iterating over JSON structures by value or key)
-+ string (various common string operations that are inconvient at times in Bash)
++ string (various common string operations that are inconvenient at times in Bash)
 + reldate (for calculating a relative date, e.g. -3 weeks ago)
 + xlsx2csv, xlsx2json for extracting sheets from an XLSX Workbook file
 
@@ -186,7 +186,7 @@ But if you need to work with a large number of JSON objects ...
 # [dataset](https://caltechlibrary.github.io/dataset/)
 
 Where _datatools_ collection is about transforming and extracting,
-[dataset](https://caltechlibrary.github.io/dataset/) is all about storing and retrieving JSON objects by collection unique IDs. Havesting a bunch of DOI metadata from CrossRef or public profiles from ORCID? You can write the JSON to disc but we've found it more convient to organize those into collection.
+[dataset](https://caltechlibrary.github.io/dataset/) is all about storing and retrieving JSON objects by collection unique IDs. Harvesting a bunch of DOI metadata from CrossRef or public profiles from ORCID? You can write the JSON to disc but we've found it more convenient to organize those into collection.
 
 Here's an example of getting an my ORCID profile and storing it.
  
