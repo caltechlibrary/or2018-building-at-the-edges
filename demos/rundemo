@@ -1,0 +1,3 @@
+#!/bin/bash
+
+scriptreplay --timing="$1.timing" "$1.log"

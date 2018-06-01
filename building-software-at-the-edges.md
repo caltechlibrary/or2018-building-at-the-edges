@@ -12,9 +12,9 @@ https://caltechlibrary.github.io/or2018-building-at-the-edges
 
 # Overview
 
-Caltech Library has shifted from a system centric to a data centric
-approach in developing software. This lead to two concepts and three
-tool projects.
+Caltech Library has shifted from a system centric
+to a data centric approach in developing software. 
+This lead to two concepts and three tools projects.
 
 ## Concepts
 
@@ -62,16 +62,6 @@ And all systems eventually became legacy systems over time...
     + 2 software developers
     + 2 librarian developers
 
---
-
-# But there is a windfall
-
-+ Our developers are experienced
-+ We have a diverse computing background
-+ Our new and legacy systems have Web accessible API
-+ Our external services have Web accessible API
-	+ E.g. CrossRef, ORCID
-
 ```
     We decided to develop at the edges in common
 	rather than inside separate systems in separate languages
@@ -81,32 +71,29 @@ And all systems eventually became legacy systems over time...
 
 # What do I mean by development at the edges?
 
-+ API are the edge of a system
-+ We choose to focus on data model and data flow via API
-
-# Development at the edges in practice
-
-+ Prefer web API over direct SQL manipulation
-+ Favor data models over SQL Scheme
-+ Prefer data flow over plugins and customization
++ Web API are the edge of a system
+    + Prefer Web API over direct SQL manipulation
+    + Favor data models over SQL Scheme
++ Focus on data models and data flow
+    + Script data flow and transformation
+    + Avoid system plugins and customization
 
 Practicing this showed us **Continuous Migration**
 
 --
 
-# Continuous Migration, concept
+# Continuous Migration
 
 + Always be able to move data into and out of your system(s) via API
 + Migrate your data as part of your regular practice
-	+ analogous to testing in software development practice
+	+ analogous to testing in software development
 
-# Advantages
+# A few of the advantages
 
-+ Ensures you know how to capture everything needed for preservation
-+ By capturing what you need in an ongoing basis you
-  lower the cost of picking a better tool in the future
++ Capture everything needed for preservation
++ Lower the cost of picking a better tool in the future
 + Makes it easier to setup test systems using real data
-+ Lowers the cost/expectation on a given system letting last longer
++ Your ready to analyze your data
 
 --
 
@@ -128,8 +115,6 @@ Which allows us to
 
 --
 
-# Continuous Migration,
-
 ## A really common implementation pattern
 
 + Harvest
@@ -140,17 +125,20 @@ Which allows us to
 
 # Which brings us to three tool projects...
 
-+ [datatools](https://caltechlibrary.github.io/datatools/) for processing data and prototyping data flows
-+ [dataset](https://caltechlibrary.github.io/dataset/) for holding copies of data during processing and between steps in a data pipeline
-+ [mkpage](https://caltechlibrary.github.io/mkpage/) a JSON friendly rendering engine and terribly simple web server
++ [datatools](https://caltechlibrary.github.io/datatools/) 
+    + for processing data and prototyping data flows
++ [dataset](https://caltechlibrary.github.io/dataset/) 
+    + for holds copies of data during processing 
+    + or between steps in a data pipeline
++ [mkpage](https://caltechlibrary.github.io/mkpage/) 
+    + a Markdown/JSON friendly rendering engine 
+    + and terribly simple web server
 
 --
 
 # [datatools](https://caltechlibrary.github.io/datatools/)
 
-Working at the edges has lead us to develop three open source tools projects.  The first is _datatools_.
-
-The goal of _datatools_ is to ease working with CSV, XLSX Workbooks and JSON documents on the command line or in Bash scripts. These include
+Lots of command line tools...
 
 + csv2json, csvcleaner, csv2mdtable, csvfind, csvjoin, csv2xlsx
 + jsonjoin, jsonmunge, jsonrange (for iterating over JSON structures by value or key)
@@ -158,7 +146,9 @@ The goal of _datatools_ is to ease working with CSV, XLSX Workbooks and JSON doc
 + reldate (for calculating a relative date, e.g. -3 weeks ago)
 + xlsx2csv, xlsx2json for extracting sheets from an XLSX Workbook file
 
-Combining these with Unix work horses like *cURL*, *sed*, and *grep* you can get pretty far with your data munging without leaving the command line or simple Bash script.
+Combining these with Unix work horses like *cURL*, *sed*, and *grep* 
+you can get pretty far with your data munging without leaving the 
+command line or simple Bash script.
 
 But if you need to work with a large number of JSON objects ...
 
@@ -166,21 +156,10 @@ But if you need to work with a large number of JSON objects ...
 
 # [dataset](https://caltechlibrary.github.io/dataset/)
 
-Where _datatools_ collection is about transforming and extracting,
-[dataset](https://caltechlibrary.github.io/dataset/) is all about storing and retrieving JSON objects by collection unique IDs. Harvesting a bunch of DOI metadata from CrossRef or public profiles from ORCID? You can write the JSON to disc but we've found it more convenient to organize those into collection.
+[dataset](https://caltechlibrary.github.io/dataset/) is about storing and retrieving JSON objects by collection unique IDs.
 
-Here's an example of getting an my ORCID profile and storing it.
- 
-<!--
-
-TODO:
-
-Need to create a simple show and tell of extracting something from a XLSX workbook,
-Flip into a JSON collection and then join with data harvested from :w
-
--->
-
---
++ store on local disc or in cloud (e.g. S3, GCS)
++ Move between trees and grids
 
 # mkpage
 
@@ -188,13 +167,15 @@ A "page" level content system including a terribly simple static web server
 
 + Markdown friendly
 + JSON friendly
-+ simple set of tools to script a content system 
++ A simple set of cli tools to script a content system 
 
 --
 
 # Evolving the right tools
 
-Bash/Python plus these three projects evolved out or migrating systems and data, data analysis of our collections and building
+Bash/Python plus these three projects evolved from migrating 
+systems and data, data analysis of our collections and 
+building an aggregated view of EPrints and Invenio content
 
 	https://feeds.library.caltech.edu
 
@@ -204,81 +185,57 @@ Bash/Python plus these three projects evolved out or migrating systems and data,
 
 ## feeds.library.caltech.edu
 
-Building an aggregated view of our repositories
-
 ### Harvesting
 
-+ cURL (for exploring API)
-+ Go and Python based utilities
-+ Store results as JSON (plus attachments if needed) in 
-  a dataset collection(s)
++ We are moving to Python scripts for harvesting
++ Store harvested data in a dataset collections
+
+### API harvested
+
++ Internal: 
+	+ CaltechAUTHORS/CaltechTHESIS (EPrints)
+	+ CaltechDATA -(Invenio)
++ External:
+	+ [ORCID](https://orcid.org) API
+	+ [CrossRef](https://api.crossref.org) API
 
 ### Transformation
 
-+ Bash/Python scripts
+We build lists of object keys, then build arrays of objects
+to render
+
++ Python 3.6 scripts
 + [dataset](https://caltechlibrary.github.io/dataset)
 
 ### Redeploy
 
-+ [dataset](https://caltechlibrary.github.io/dataset), Python and [mkpage](https://caltechlibrary.github.io/mkpage)
-
-<!-- DEMO HERE -->
-
---
-
-# Use case
-
-(internal facing)
-
-## Data import and enhancement
-
-+ Vendor supplied data in XLSX format (1Science)
-+ Need to create an set of EPrint XML documents to import
-
-Problem is a model for enhancement in general. We plan to use
-this approach in batch adding ORCID, normalizing Funder names, etc.
-
-### Harvest
-
-+ xlsx2csv (from [datatools](https://caltechlibrary.github.io/datatools)
-
-### Transformation
-
-+ Python and [dataset](https://caltechlibrary.github.io/dataset)
-
-#### Redeploy
-
-+ Build EPrint XML documents for import with Python and [dataset](https://caltechlibrary.github.io/dataset) and [mkpage](https://caltechlibrary.github.io/mkpage)
-
-
-<!-- DEMO HERE -->
++ We use Python 3.6 scripts walk through site and create/update views
++ [dataset](https://caltechlibrary.github.io/dataset)
++ [mkpage](https://caltechlibrary.github.io/mkpage)
 
 --
 
-# Collectively
-
-## API used
-
-+ Internal: [EPrints](http://www.eprints.org/uk/) and [Invenio](http://https://invenio-software.org/)
-+ External: [CrossRef](https://api.crossref.org) API, [ORCID](https://orcid.org) API
+# Summerizing
 
 ## Technology we're using
 
-+ Go and Python
++ Go with Python for orchestration
 + [dataset](https://caltechlibrary.github.io/dataset)
+	+ https://github.com/caltechlibrary/dataset/releases/latest
 + [datatools](https://caltechlibrary.github.io/datatools)
+	+ https://github.com/caltechlibrary/datatools/releases/latest
 + [mkpage](https://caltechlibrary.github.io/mkpage)
+	+ https://github.com/caltechlibrary/mkpage/releases/latest
+
+We have compiled versions for Mac, Windows (on Intel),
+Linux and Raspberry Pi!
 
 --
 
 # Thank you
 
-+ https://github.com/caltechlibrary/datatools
-+ https://github.com/caltechlibrary/dataset
-+ https://github.com/caltechlibrary/mkpage
-+ https://feeds.library.caltech.edu
-
 R. S. Doiel, rsdoiel@library.caltech.edu
 Thomas Morrell, Caltech Library, tomorrell@caltech.edu
 
 https://caltechlibrary.github.io/or2018-building-at-the-edges
+

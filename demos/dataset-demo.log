@@ -1,0 +1,268 @@
+Script started on 2018-06-01 12:45:37-0700
+Setting up aliases
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: # This is a ui[K[Kquick tour of dataset
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset init friends.ds
+OK
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: tree friends.ds
+[01;34mfriends.ds[00m
+└── collection.json
+
+0 directories, 1 file
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: # A collection is a fole[Kde [Kr with collection.json metadata
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: # I need a friends[K
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset cr[K[Kfriends.ds create eamonn '{"Name":"Eamonn"}'
+OK
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: tree friends.ds
+[01;34mfriends.ds[00m
+├── [01;34maa[00m
+│   └── eamonn.json
+└── collection.json
+
+1 directory, 2 files
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: # I have a new object in my cole[Klection, we can count and list keys
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset friends.ds count
+1
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset friends.ds count[K[K[K[K[Kkeys
+eamonn
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: datae[Kset friends.ds read eamonn
+{"Name":"Eamonn","_Key":"eamonn"}
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset friends.ds read eamonn[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1@ [1@-[1@p
+{
+    "Name": "Eamonn",
+    "_Key": "eamonn"
+}
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset -p friends.ds read eamonn > eamonn.json
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: # I am going to update Eamonn's object
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: sed -i.bak -s "s/Eamonnn[K/Eamonn O'Gorman/g" eamonn.json
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset friends.ds update eamonn eamonn.json
+OK
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: datas[Ka[Kset friends.ds read eamonn[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1@ [1@-[1@p[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C
+{
+    "Name": "Eamonn O'Gorman",
+    "_Key": "eamonn"
+}
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: # We've updated, notice I passed in a JSON[K[K[K[K.json file this time
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: # I could have piled[K[K[Kped it in this way
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: cat eamonn.json | dataset friends.ds [K[K[K[K[K[K[K[K[K[K[K-i - dri[K[K[Kfriends.ds update em[Kamonn
+OK
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: cat eamonn.json | dataset -i - friends.ds update eamonn[C[C[C[C[C[C[20P# I could have piped it in this way[C[C[C[C[C[C[C[CWe've updated, notice I passed in a .json file this time[C[C[C[C[C[C[25Pdataset -p friends.ds read eamonn
+{
+    "Name": "Eamonn O'Gorman",
+    "_Key": "eamonn"
+}
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: # Let's add more friends from my spreadsheet
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset friends.c[Kds import-csv c[Kfriends-with-orcids.csv 1
+OK
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataet[K[Kset co[K[Kfriends.ds count
+9
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset friends.ds count[K[K[K[K[Kkeys
+mojo
+robert
+stephen
+eamonn
+frieda
+jack
+mark
+mike
+tom
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset friends.ds tom[C[C[C[C[C[C[C[C[C[C[C[C[C[C[1@ [1@-[1@p
+do not understand tom for "dataset -p friends.ds tom"
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset -p friends.ds tom[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[K[Kread tom
+{
+    "Catch Phrase": "",
+    "ID": "tom",
+    "Name": "Tom Morrell",
+    "_Key": "tom",
+    "orcid": "0000-0001-9266-5146"
+}
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: # N[KLet me list only my friends with ORCIDs
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: # Let me list only my friends with ORCIDs[C[C[C[C[C[C[11Pdataset -p friends.ds read tom[5Ptom[C[C[C[C[C[C[C[C[C[C[C[C[C[C[2Pfriends.ds keys '(ne .N[Korcid "")' 
+mike
+robert
+tom
+mark
+stephen
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset friends.ds keys '(ne .orcid "")' | h[Kwhile resad[K[K[Kad KEYl[K[K[K[K-r KEY; do
+> dataset friends.ds read "${KEY}";[K
+> done
+{"Catch Phrase":"Oops, I just deleted everything","ID":"robert","Name":"Robert Doiel","_Key":"robert","orcid":"0000-0003-0900-6903"}
+{"Catch Phrase":"","ID":"tom","Name":"Tom Morrell","_Key":"tom","orcid":"0000-0001-9266-5146"}
+{"Catch Phrase":"","ID":"mike","Name":"Mike Hucka","_Key":"mike","orcid":"0000-0001-9105-5960"}
+{"Catch Phrase":"Robert, maybe you shouldn’t","ID":"mark","Name":"Mark Doiel","_Key":"mark","orcid":"0000-0001-7321-1464"}
+{"Catch Phrase":"","ID":"stephen","Name":"Stephen Davison","_Key":"stephen","orcid":"0000-0003-0102-8200"}
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: I [K[K# I can turnt[K this[K[Kesess[K gr[K[Kobjects to[K[Kinto a f[Kgrid
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset# I can turn theses objects into a grid[C[C[C[C[C[Cdataset friends.ds keys '(ne .orcid "")' | while read -r KEY; do dataset friends.ds read "${KEY}"; done[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[C[C[C[C[C[C# Let me list only my friends with ORCIDs[C[C[C[C[C[Cdataset friends.ds keys '(ne .orcid "")' > gri.k[K[Kd.keys
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset -[Kfr[Kfr[K[Kriends.ds grid grid.keys .Name .orcid
+[["Mark Doiel","0000-0001-7321-1464"],["Mike Hucka","0000-0001-9105-5960"],["Robert Doiel","0000-0003-0900-6903"],["Tom Morrell","0000-0001-9266-5146"],["Stephen Davison","0000-0003-0102-8200"]]
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset friends.ds grid grid.keys .Name .orcid | jq .
+[1;39m[
+  [1;39m[
+    [0;32m"Mark Doiel"[0m[1;39m,
+    [0;32m"0000-0001-7321-1464"[0m[1;39m
+  [1;39m][0m[1;39m,
+  [1;39m[
+    [0;32m"Mike Hucka"[0m[1;39m,
+    [0;32m"0000-0001-9105-5960"[0m[1;39m
+  [1;39m][0m[1;39m,
+  [1;39m[
+    [0;32m"Robert Doiel"[0m[1;39m,
+    [0;32m"0000-0003-0900-6903"[0m[1;39m
+  [1;39m][0m[1;39m,
+  [1;39m[
+    [0;32m"Tom Morrell"[0m[1;39m,
+    [0;32m"0000-0001-9266-5146"[0m[1;39m
+  [1;39m][0m[1;39m,
+  [1;39m[
+    [0;32m"Stephen Davison"[0m[1;39m,
+    [0;32m"0000-0003-0102-8200"[0m[1;39m
+  [1;39m][0m[1;39m
+[1;39m][0m
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: I have[K[K[K[K[K[K# I have a 2D array of keys.[K but it isn't persistence[K[K[K[Kant[K[K[Kent
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: # I have a 2D array of keys but it isn't persistent[C[C[C[C[C[Cdataset friends.ds grid grid.keys .Name .orcid | jq .[1P[1P[1P[1P[1@f[1P[1P[1@f[1@r[1@a[1@m[1@e[1@ [1@'[1@o[1@r[1@c[1@i[1@d[1@-[1@f[1@r[1@i[1@e[1@n[1@d[1@s[1@'[1@ [C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[K[K[K[K[K[K[K
+{
+  "frame_name": "orcid-friends",
+  "collection_name": "friends.ds",
+  "dot_paths": [
+    "._Key",
+    ".Name",
+    ".orcid"
+  ],
+  "keys": [
+    "mark",
+    "mike",
+    "robert",
+    "tom",
+    "stephen"
+  ],
+  "grid": [
+    [
+      "mark",
+      "Mark Doiel",
+      "0000-0001-7321-1464"
+    ],
+    [
+      "mike",
+      "Mike Hucka",
+      "0000-0001-9105-5960"
+    ],
+    [
+      "robert",
+      "Robert Doiel",
+      "0000-0003-0900-6903"
+    ],
+    [
+      "tom",
+      "Tom Morrell",
+      "0000-0001-9266-5146"
+    ],
+    [
+      "stephen",
+      "Stephen Davison",
+      "0000-0003-0102-8200"
+    ]
+  ],
+  "created": "2018-06-01T12:51:59.361098876-07:00",
+  "updated": "2018-06-01T12:51:59.361099398-07:00",
+  "labels": [
+    "_Key",
+    "Name",
+    "orcid"
+  ],
+  "column_types": [
+    "string",
+    "string",
+    "string"
+  ]
+}
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: g[Kdataset friends.ds frames
+orcid-friends
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset friends.ds frames[K orcid-friends
+{
+  "frame_name": "orcid-friends",
+  "collection_name": "friends.ds",
+  "dot_paths": [
+    "._Key",
+    ".Name",
+    ".orcid"
+  ],
+  "keys": [
+    "mark",
+    "mike",
+    "robert",
+    "tom",
+    "stephen"
+  ],
+  "grid": [
+    [
+      "mark",
+      "Mark Doiel",
+      "0000-0001-7321-1464"
+    ],
+    [
+      "mike",
+      "Mike Hucka",
+      "0000-0001-9105-5960"
+    ],
+    [
+      "robert",
+      "Robert Doiel",
+      "0000-0003-0900-6903"
+    ],
+    [
+      "tom",
+      "Tom Morrell",
+      "0000-0001-9266-5146"
+    ],
+    [
+      "stephen",
+      "Stephen Davison",
+      "0000-0003-0102-8200"
+    ]
+  ],
+  "created": "2018-06-01T12:51:59.361098876-07:00",
+  "updated": "2018-06-01T12:51:59.361099398-07:00",
+  "labels": [
+    "_Key",
+    "Name",
+    "orcid"
+  ],
+  "column_types": [
+    "string",
+    "string",
+    "string"
+  ]
+}
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: dataset friends.ds frame orcid-friends | jq .gr[K[Kgrid
+[1;39m[
+  [1;39m[
+    [0;32m"mark"[0m[1;39m,
+    [0;32m"Mark Doiel"[0m[1;39m,
+    [0;32m"0000-0001-7321-1464"[0m[1;39m
+  [1;39m][0m[1;39m,
+  [1;39m[
+    [0;32m"mike"[0m[1;39m,
+    [0;32m"Mike Hucka"[0m[1;39m,
+    [0;32m"0000-0001-9105-5960"[0m[1;39m
+  [1;39m][0m[1;39m,
+  [1;39m[
+    [0;32m"robert"[0m[1;39m,
+    [0;32m"Robert Doiel"[0m[1;39m,
+    [0;32m"0000-0003-0900-6903"[0m[1;39m
+  [1;39m][0m[1;39m,
+  [1;39m[
+    [0;32m"tom"[0m[1;39m,
+    [0;32m"Tom Morrell"[0m[1;39m,
+    [0;32m"0000-0001-9266-5146"[0m[1;39m
+  [1;39m][0m[1;39m,
+  [1;39m[
+    [0;32m"stephen"[0m[1;39m,
+    [0;32m"Stephen Davison"[0m[1;39m,
+    [0;32m"0000-0003-0102-8200"[0m[1;39m
+  [1;39m][0m[1;39m
+[1;39m][0m
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: # Notice frames include an extra column, the Object ID
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: # I am ur[K[Krunning out of time, bye bye
+]0;rsdoiel@notebook-rd2: ~/src/github.com/caltechlibrary/or2018-building-software-at-the-edges/demosbash: exit
+exit
+
+Script done on 2018-06-01 12:52:43-0700
