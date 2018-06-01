@@ -235,6 +235,7 @@ Linux and Raspberry Pi!
 # Thank you
 
 R. S. Doiel, rsdoiel@library.caltech.edu
+
 Thomas Morrell, Caltech Library, tomorrell@caltech.edu
 
 https://caltechlibrary.github.io/or2018-building-at-the-edges
