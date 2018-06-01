@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Building software at the edges of heterogeneous repositories</title>
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+<nav>
+<a id="start-slide" href="00-building-software-at-the-edges.html">Home</a>
+<a id="prev-slide" href="14-building-software-at-the-edges.html">Prev</a>
+<a id="next-slide" href="16-building-software-at-the-edges.html">Next</a>
+<a id="end-slide" href="18-building-software-at-the-edges.html">End</a>
+</nav>
+
+<section class="slide">
+    <div class="slide"><h1>Use case</h1>
+
+<h2>feeds.library.caltech.edu</h2>
+
+<p>Building an aggregated view of our repositories</p>
+
+<h3>Harvesting</h3>
+
+<ul>
+<li>cURL (for exploring API)</li>
+<li>Go and Python based utilities</li>
+<li>Store results as JSON (plus attachments if needed) in
+a dataset collection(s)</li>
+</ul>
+
+<h3>Transformation</h3>
+
+<ul>
+<li>Bash/Python scripts</li>
+<li><a href="https://caltechlibrary.github.io/dataset">dataset</a></li>
+</ul>
+
+<h3>Redeploy</h3>
+
+<ul>
+<li><a href="https://caltechlibrary.github.io/dataset">dataset</a>, Python and <a href="https://caltechlibrary.github.io/mkpage">mkpage</a></li>
+</ul>
+
+<!-- DEMO HERE -->
+</div>
+</section>
+
+<footer>
+<span><h1><A href="https://caltech.edu">Caltech</a></h1></span>
+<span>&copy; 2018 <a href="https://www.library.caltech.edu/copyright">Caltech library</a></span>
+<address>1200 E California Blvd, Mail Code 1-32, Pasadena, CA 91125-3200</address>
+<span>Phone: <a href="tel:+1-626-395-3405">(626)395-3405</a></span>
+<span><a href="mailto:library@caltech.edu">Email Us</a></span>
+</footer>
+
+<script>
+(function (document, window) {
+    'use strict';
+    var start = document.getElementById('start-slide'),
+        prev = document.getElementById('prev-slide'),
+        next = document.getElementById('next-slide'),
+        end = document.getElementById('end-slide');
+    
+    window.addEventListener("keydown", function(e) {
+        switch (e.key) {
+        case "PageDown":
+        case "ArrowRight":
+        case "ArrowDown":
+        case "Enter":
+        case " ":
+            if (next != null) {
+                next.click();
+            }
+            break;
+        case "PageUp":
+        case "ArrowLeft":
+        case "ArrowUp":
+        case "Backspace":
+            if (prev != null) {
+                prev.click();
+            }
+            break;
+        case "Home":
+            if (start != null) {
+                start.click();
+            }
+            break;
+        case "End":
+            if (end != null) {
+                end.click();
+            }
+            break;
+        default:
+            return;
+        }
+        e.preventDefault();
+    }, true);
+}(document, window));
+</script>
+</body>
+</html>

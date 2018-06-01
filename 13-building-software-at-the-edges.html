@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Building software at the edges of heterogeneous repositories</title>
+    <link rel="stylesheet" href="/css/site.css">
+</head>
+<body>
+<nav>
+<a id="start-slide" href="00-building-software-at-the-edges.html">Home</a>
+<a id="prev-slide" href="12-building-software-at-the-edges.html">Prev</a>
+<a id="next-slide" href="14-building-software-at-the-edges.html">Next</a>
+<a id="end-slide" href="18-building-software-at-the-edges.html">End</a>
+</nav>
+
+<section class="slide">
+    <div class="slide"><h1><a href="https://caltechlibrary.github.io/datatools/">datatools</a></h1>
+
+<p>Working at the edges has lead us to develop two open source collections of tools.  The first is <em>datatools</em>.</p>
+
+<p>The goal of <em>datatools</em> is to ease working with CSV, XLSX Workbooks and JSON documents on the command line or in Bash scripts. These include</p>
+
+<ul>
+<li>csv2json, csvcleaner, csv2mdtable, csvfind, csvjoin, csv2xlsx</li>
+<li>jsonjoin, jsonmunge, jsonrange (for iterating over JSON structures by value or key)</li>
+<li>string (various common string operations that are inconvient at times in Bash)</li>
+<li>reldate (for calculating a relative date, e.g. -3 weeks ago)</li>
+<li>xlsx2csv, xlsx2json for extracting sheets from an XLSX Workbook file</li>
+</ul>
+
+<p>Combining these with Unix work horses like <em>cURL</em>, <em>sed</em>, and <em>grep</em> you can get pretty far with your data munging without leaving the command line or simple Bash script.</p>
+
+<p>But if you need to work with a large number of JSON objects &hellip;</p>
+</div>
+</section>
+
+<footer>
+<span><h1><A href="https://caltech.edu">Caltech</a></h1></span>
+<span>&copy; 2018 <a href="https://www.library.caltech.edu/copyright">Caltech library</a></span>
+<address>1200 E California Blvd, Mail Code 1-32, Pasadena, CA 91125-3200</address>
+<span>Phone: <a href="tel:+1-626-395-3405">(626)395-3405</a></span>
+<span><a href="mailto:library@caltech.edu">Email Us</a></span>
+</footer>
+
+<script>
+(function (document, window) {
+    'use strict';
+    var start = document.getElementById('start-slide'),
+        prev = document.getElementById('prev-slide'),
+        next = document.getElementById('next-slide'),
+        end = document.getElementById('end-slide');
+    
+    window.addEventListener("keydown", function(e) {
+        switch (e.key) {
+        case "PageDown":
+        case "ArrowRight":
+        case "ArrowDown":
+        case "Enter":
+        case " ":
+            if (next != null) {
+                next.click();
+            }
+            break;
+        case "PageUp":
+        case "ArrowLeft":
+        case "ArrowUp":
+        case "Backspace":
+            if (prev != null) {
+                prev.click();
+            }
+            break;
+        case "Home":
+            if (start != null) {
+                start.click();
+            }
+            break;
+        case "End":
+            if (end != null) {
+                end.click();
+            }
+            break;
+        default:
+            return;
+        }
+        e.preventDefault();
+    }, true);
+}(document, window));
+</script>
+</body>
+</html>
