@@ -9,6 +9,8 @@ https://caltechlibrary.github.io/or2018-building-at-the-edges
 
 
 --
+<!-- Slide 01 -->
+
 
 # Overview
 
@@ -31,6 +33,8 @@ This lead to two concepts and three tools projects.
 	+ A deconstructed web content management system
 
 --
+<!-- Slide 02 -->
+
 
 # Our Problem
 
@@ -54,6 +58,8 @@ Development became limited to configuration, customization, writing plugins or m
 And all systems eventually became legacy systems over time...
 
 --
+<!-- Slide 03 -->
+
 
 # Constraints
 
@@ -68,6 +74,8 @@ And all systems eventually became legacy systems over time...
 ```
 
 --
+<!-- Slide 04 -->
+
 
 # What do I mean by development at the edges?
 
@@ -81,6 +89,8 @@ And all systems eventually became legacy systems over time...
 Practicing this showed us **Continuous Migration**
 
 --
+<!-- Slide 05 -->
+
 
 # Continuous Migration
 
@@ -96,6 +106,8 @@ Practicing this showed us **Continuous Migration**
 + Your ready to analyze your data
 
 --
+<!-- Slide 06 -->
+
 
 # Continuous Migration, lessons learned
 
@@ -114,6 +126,8 @@ Which allows us to
   and the software you write
 
 --
+<!-- Slide 07 -->
+
 
 ## A really common implementation pattern
 
@@ -122,6 +136,8 @@ Which allows us to
 + Redeploy
 
 --
+<!-- Slide 08 -->
+
 
 # Which brings us to three tool projects...
 
@@ -135,6 +151,8 @@ Which allows us to
     + and terribly simple web server
 
 --
+<!-- Slide 09 -->
+
 
 # [datatools](https://caltechlibrary.github.io/datatools/)
 
@@ -153,6 +171,8 @@ command line or simple Bash script.
 But if you need to work with a large number of JSON objects ...
 
 --
+<!-- Slide 10 -->
+
 
 # [dataset](https://caltechlibrary.github.io/dataset/)
 
@@ -170,6 +190,8 @@ A "page" level content system including a terribly simple static web server
 + A simple set of cli tools to script a content system 
 
 --
+<!-- Slide 11 -->
+
 
 # Evolving the right tools
 
@@ -180,6 +202,8 @@ building an aggregated view of EPrints and Invenio content
 **https://feeds.library.caltech.edu**
 
 --
+<!-- Slide 12 -->
+
 
 # Use case
 
@@ -214,6 +238,8 @@ to render
 + [mkpage](https://caltechlibrary.github.io/mkpage)
 
 --
+<!-- Slide 13 -->
+
 
 # Summerizing
 
@@ -231,6 +257,8 @@ Compiled versions for Mac, Windows,
 Linux and Raspberry Pi!
 
 --
+<!-- Slide 14 -->
+
 
 # Thank you
 
