@@ -1,3 +1,4 @@
+<!-- Slide 00 -->
 
 # Building software at the edges of heterogeneous repositories
 
@@ -7,10 +8,8 @@ Thomas Morrell, Caltech Library, tomorrell@caltech.edu
 
 https://caltechlibrary.github.io/or2018-building-at-the-edges
 
-
 --
 <!-- Slide 01 -->
-
 
 # Overview
 
@@ -35,10 +34,7 @@ This lead to two concepts and three tools projects.
 --
 <!-- Slide 02 -->
 
-
-# Our Problem
-
-Caltech Library has a heterogeneous mix of repository systems 
+# Our Problem, a heterogeneous mix of repository systems 
 
 + [EPrints](http://www.eprints.org/uk) - Apache/Perl/MySQL + EPrints Markup
 	+ [CaltechAUTHORS](https://authors.library.caltech.edu), 
@@ -53,29 +49,13 @@ Caltech Library has a heterogeneous mix of repository systems
 
 Lots of languages to support. No single system fulfills our needs.
 
-Development became limited to configuration, customization, writing plugins or modules for a given system.
-
-And all systems eventually became legacy systems over time...
-
---
-<!-- Slide 03 -->
-
-
-# Constraints
-
-+ Caltech is small
-+ Caltech Library has limited staff for development
-    + 2 software developers
-    + 2 librarian developers
-
 ```
     We decided to develop at the edges in common
 	rather than inside separate systems in separate languages
 ```
 
 --
-<!-- Slide 04 -->
-
+<!-- Slide 03 -->
 
 # What do I mean by development at the edges?
 
@@ -89,6 +69,7 @@ And all systems eventually became legacy systems over time...
 Practicing this showed us **Continuous Migration**
 
 --
+FIXME: Rewrite here
 <!-- Slide 05 -->
 
 
