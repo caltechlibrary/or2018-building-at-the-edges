@@ -15,6 +15,7 @@ https://caltechlibrary.github.io/or2018-building-at-the-edges
 
 Caltech Library has shifted from a system centric
 to a data centric approach in developing software. 
+
 This lead to two concepts and three tools projects.
 
 ## Concepts
@@ -84,7 +85,8 @@ Practicing this showed us **Continuous Migration**
 + Capture everything needed for preservation
 + Lower the cost of picking a better tool in the future
 + Makes it easier to setup test systems using real data
-+ Your ready to analyze your data
++ You are in a good position ready to analyze your data
++ A platform to test and operate on whole collections
 
 --
 <!-- Slide 05 -->
@@ -118,12 +120,10 @@ Our experience has shown us
 
 # [datatools](https://caltechlibrary.github.io/datatools/)
 
-Lots of command line tools...
+Some of the command line tools...
 
 + csv2json, csvcleaner, csv2mdtable, csvfind, csvjoin, csv2xlsx
-+ jsonjoin, jsonmunge, jsonrange (for iterating over JSON structures by value or key)
-+ string (various common string operations that are inconvenient at times in Bash)
-+ reldate (for calculating a relative date, e.g. -3 weeks ago)
++ jsoncols, jsonjoin, jsonmunge, jsonrange (for iterating over JSON structures by value or key)
 + xlsx2csv, xlsx2json for extracting sheets from an XLSX Workbook file
 
 Combining these with Unix work horses like *cURL*, *sed*, and *grep* 
@@ -138,7 +138,7 @@ But if you need to work with a large number of JSON objects ...
 
 # [dataset](https://caltechlibrary.github.io/dataset/)
 
-[dataset](https://caltechlibrary.github.io/dataset/) is about storing and retrieving JSON objects by collection unique IDs.
+[dataset](https://caltechlibrary.github.io/dataset/) is about storing and retrieving JSON objects by IDs unique to a collection.
 
 + store on local disc or in cloud (e.g. S3, GCS)
 + Move between trees and grids
