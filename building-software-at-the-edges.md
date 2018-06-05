@@ -8,6 +8,7 @@ Thomas Morrell, Caltech Library, tomorrell@caltech.edu
 
 https://caltechlibrary.github.io/or2018-building-at-the-edges
 
+0
 --
 <!-- Slide 01 -->
 
@@ -32,6 +33,7 @@ This lead to two concepts and three tools projects.
 + [mkpage](https://github.com/caltechlibrary/mkpage)
 	+ A deconstructed web content management system
 
+1
 --
 <!-- Slide 02 -->
 
@@ -55,6 +57,7 @@ Lots of languages to support. No single system fulfills our needs.
 	rather than inside separate systems in separate languages
 ```
 
+2
 --
 <!-- Slide 03 -->
 
@@ -71,6 +74,7 @@ Lots of languages to support. No single system fulfills our needs.
 
 Practicing this showed us **Continuous Migration**
 
+3
 --
 <!-- Slide 04 -->
 
@@ -88,6 +92,7 @@ Practicing this showed us **Continuous Migration**
 + You are in a good position ready to analyze your data
 + A platform to test and operate on whole collections
 
+4
 --
 <!-- Slide 05 -->
 
@@ -99,6 +104,7 @@ Our experience has shown us
 + Sustainability of data is enhanced by simple structures
 + Data sustainability may be easier to achieve than software sustainability
 
+5
 --
 <!-- Slide 06 -->
 
@@ -114,6 +120,7 @@ Our experience has shown us
     + a Markdown/JSON friendly rendering engine 
     + and terribly simple web server
 
+6
 --
 <!-- Slide 09 -->
 
