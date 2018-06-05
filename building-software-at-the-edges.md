@@ -123,54 +123,11 @@ Our experience has shown us
 --
 <!-- Slide 07 -->
 
-
-# [datatools](https://caltechlibrary.github.io/datatools/)
-
-Some of the command line tools...
-
-+ csv2json, csvcleaner, csv2mdtable, csvfind, csvjoin, csv2xlsx
-+ jsoncols, jsonjoin, jsonmunge, jsonrange (for iterating over JSON structures by value or key)
-+ xlsx2csv, xlsx2json for extracting sheets from an XLSX Workbook file
-
-<!-- this should be in dialog: Combining these with Unix work horses like *cURL*, *sed*, and *grep* 
-you can get pretty far with your data munging without leaving the 
-command line or simple Bash script.
-
-But if you need to work with a large number of JSON objects ...
--->
-
-# [dataset](https://caltechlibrary.github.io/dataset/)
-
-+ about storing and retrieving JSON objects by IDs unique to a collection.
-+ store on local disc or in cloud (e.g. S3, GCS)
-+ import/export to GSheets
-+ can be index by Blevesearch and search via the command
-+ move between trees and grids
-
-# [mkpage](https://caltechlibrary.github.io/mkpage)
-
-A "page" level content system including a terribly simple static web server
-
-+ Markdown friendly
-+ JSON friendly
-+ A simple set of cli tools to script a content system 
+**demo**
 
 7
 --
 <!-- Slide 08 -->
-
-
-# Evolving the right tools
-
-Bash/Python plus these three projects evolved from migrating 
-systems and data, data analysis of our collections and 
-building an aggregated view of EPrints and Invenio content
-
-**demo**
-
-8
---
-<!-- Slide 09 -->
 
 
 # Use case
@@ -205,14 +162,14 @@ to render
 + [dataset](https://caltechlibrary.github.io/dataset)
 + [mkpage](https://caltechlibrary.github.io/mkpage)
 
-9
+8
 --
-<!-- Slide 10 -->
+<!-- Slide 09 -->
 
 
 # Summarizing
 
-## Technology we're using
+## Technology we're using now
 
 + Go with Python for orchestration
 + [dataset](https://caltechlibrary.github.io/dataset)
@@ -225,9 +182,9 @@ to render
 Compiled versions for Mac, Windows,
 Linux and Raspberry Pi!
 
-10
+9
 --
-<!-- Slide 11 -->
+<!-- Slide 10 -->
 
 
 # Thank you
