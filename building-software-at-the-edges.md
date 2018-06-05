@@ -66,7 +66,7 @@ Lots of languages to support. No single system fulfills our needs.
     + Prefer Web API over direct SQL manipulation
     + Favor data models over SQL Scheme
 + When Web API is missing or two complicated
-	+ Look at a plugin option that supports standards (e.g. Sword vX)
+	+ Look at a plugin option that supports standards
 + Focus on data models and data flow
     + Script data flow and transformation
     + Avoid system plugins and customization
@@ -132,7 +132,7 @@ Some of the command line tools...
 + jsoncols, jsonjoin, jsonmunge, jsonrange (for iterating over JSON structures by value or key)
 + xlsx2csv, xlsx2json for extracting sheets from an XLSX Workbook file
 
-<!-- this shoild be in dialog: Combining these with Unix work horses like *cURL*, *sed*, and *grep* 
+<!-- this should be in dialog: Combining these with Unix work horses like *cURL*, *sed*, and *grep* 
 you can get pretty far with your data munging without leaving the 
 command line or simple Bash script.
 
@@ -210,7 +210,7 @@ to render
 <!-- Slide 10 -->
 
 
-# Summerizing
+# Summarizing
 
 ## Technology we're using
 
