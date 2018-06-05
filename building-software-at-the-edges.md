@@ -122,7 +122,7 @@ Our experience has shown us
 
 6
 --
-<!-- Slide 09 -->
+<!-- Slide 07 -->
 
 
 # [datatools](https://caltechlibrary.github.io/datatools/)
@@ -139,8 +139,9 @@ command line or simple Bash script.
 
 But if you need to work with a large number of JSON objects ...
 
+7
 --
-<!-- Slide 10 -->
+<!-- Slide 08 -->
 
 
 # [dataset](https://caltechlibrary.github.io/dataset/)
@@ -158,8 +159,9 @@ A "page" level content system including a terribly simple static web server
 + JSON friendly
 + A simple set of cli tools to script a content system 
 
+8
 --
-<!-- Slide 11 -->
+<!-- Slide 09 -->
 
 
 # Evolving the right tools
@@ -168,10 +170,11 @@ Bash/Python plus these three projects evolved from migrating
 systems and data, data analysis of our collections and 
 building an aggregated view of EPrints and Invenio content
 
-**https://feeds.library.caltech.edu**
+**demo**
 
+9
 --
-<!-- Slide 12 -->
+<!-- Slide 10 -->
 
 
 # Use case
@@ -206,8 +209,9 @@ to render
 + [dataset](https://caltechlibrary.github.io/dataset)
 + [mkpage](https://caltechlibrary.github.io/mkpage)
 
+10
 --
-<!-- Slide 13 -->
+<!-- Slide 11 -->
 
 
 # Summerizing
@@ -225,6 +229,7 @@ to render
 Compiled versions for Mac, Windows,
 Linux and Raspberry Pi!
 
+11
 --
 <!-- Slide 14 -->
 
