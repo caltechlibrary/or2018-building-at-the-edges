@@ -62,6 +62,8 @@ Lots of languages to support. No single system fulfills our needs.
 + Web API are the edge of a system
     + Prefer Web API over direct SQL manipulation
     + Favor data models over SQL Scheme
++ When Web API is missing or two complicated
+	+ Look at a plugin option that supports standards (e.g. Sword vX)
 + Focus on data models and data flow
     + Script data flow and transformation
     + Avoid system plugins and customization
@@ -69,15 +71,13 @@ Lots of languages to support. No single system fulfills our needs.
 Practicing this showed us **Continuous Migration**
 
 --
-FIXME: Rewrite here
-<!-- Slide 05 -->
+<!-- Slide 04 -->
 
 
-# Continuous Migration
+# What is "Continuous Migration"?
 
-+ Always be able to move data into and out of your system(s) via API
-+ Migrate your data as part of your regular practice
-	+ analogous to testing in software development
++ The ability to moving your data into and out of your system(s) via API
++ The act of migrating your data as a regular practice
 
 # A few of the advantages
 
@@ -87,10 +87,9 @@ FIXME: Rewrite here
 + Your ready to analyze your data
 
 --
-<!-- Slide 06 -->
+<!-- Slide 05 -->
 
-
-# Continuous Migration, lessons learned
+# Lessons learned
 
 Our experience has shown us
 
@@ -98,26 +97,8 @@ Our experience has shown us
 + Sustainability of data is enhanced by simple structures
 + Data sustainability may be easier to achieve than software sustainability
 
-Which allows us to
-
-+ Take a "data science" approach to the problem solving
-    + Leverage existing tools
-    + Build purpose driven tools when required
-+ Spot patterns and use that to generalize processes
-  and the software you write
-
 --
-<!-- Slide 07 -->
-
-
-## A really common implementation pattern
-
-+ Harvest
-+ Transform
-+ Redeploy
-
---
-<!-- Slide 08 -->
+<!-- Slide 06 -->
 
 
 # Which brings us to three tool projects...

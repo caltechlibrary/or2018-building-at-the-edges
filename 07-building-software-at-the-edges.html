@@ -9,33 +9,29 @@
 <a id="start-slide" href="00-building-software-at-the-edges.html">Home</a>
 <a id="prev-slide" href="06-building-software-at-the-edges.html">Prev</a>
 <a id="next-slide" href="08-building-software-at-the-edges.html">Next</a>
-<a id="end-slide" href="13-building-software-at-the-edges.html">End</a>
+<a id="end-slide" href="12-building-software-at-the-edges.html">End</a>
 </nav>
 
 <section class="slide">
-    <div class="slide"><!-- Slide 08 -->
+    <div class="slide"><!-- Slide 09 -->
 
-<h1>Which brings us to three tool projects&hellip;</h1>
+<h1><a href="https://caltechlibrary.github.io/datatools/">datatools</a></h1>
 
-<ul>
-<li><a href="https://caltechlibrary.github.io/datatools/">datatools</a>
-
-<ul>
-<li>for processing data and prototyping data flows</li>
-</ul></li>
-<li><a href="https://caltechlibrary.github.io/dataset/">dataset</a>
+<p>Lots of command line tools&hellip;</p>
 
 <ul>
-<li>for holds copies of data during processing</li>
-<li>or between steps in a data pipeline</li>
-</ul></li>
-<li><a href="https://caltechlibrary.github.io/mkpage/">mkpage</a>
-
-<ul>
-<li>a Markdown/JSON friendly rendering engine</li>
-<li>and terribly simple web server</li>
-</ul></li>
+<li>csv2json, csvcleaner, csv2mdtable, csvfind, csvjoin, csv2xlsx</li>
+<li>jsonjoin, jsonmunge, jsonrange (for iterating over JSON structures by value or key)</li>
+<li>string (various common string operations that are inconvenient at times in Bash)</li>
+<li>reldate (for calculating a relative date, e.g. -3 weeks ago)</li>
+<li>xlsx2csv, xlsx2json for extracting sheets from an XLSX Workbook file</li>
 </ul>
+
+<p>Combining these with Unix work horses like <em>cURL</em>, <em>sed</em>, and <em>grep</em>
+you can get pretty far with your data munging without leaving the
+command line or simple Bash script.</p>
+
+<p>But if you need to work with a large number of JSON objects &hellip;</p>
 </div>
 </section>
 
