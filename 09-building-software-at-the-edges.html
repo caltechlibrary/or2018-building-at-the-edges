@@ -9,19 +9,57 @@
 <a id="start-slide" href="00-building-software-at-the-edges.html">Home</a>
 <a id="prev-slide" href="08-building-software-at-the-edges.html">Prev</a>
 <a id="next-slide" href="10-building-software-at-the-edges.html">Next</a>
-<a id="end-slide" href="12-building-software-at-the-edges.html">End</a>
+<a id="end-slide" href="11-building-software-at-the-edges.html">End</a>
 </nav>
 
 <section class="slide">
     <div class="slide"><!-- Slide 09 -->
 
-<h1>Evolving the right tools</h1>
+<h1>Use case</h1>
 
-<p>Bash/Python plus these three projects evolved from migrating
-systems and data, data analysis of our collections and
-building an aggregated view of EPrints and Invenio content</p>
+<h2>feeds.library.caltech.edu</h2>
 
-<p><strong>demo</strong></p>
+<h3>Harvesting</h3>
+
+<ul>
+<li>We are moving to Python scripts for harvesting</li>
+<li>Store harvested data in a dataset collections</li>
+</ul>
+
+<h3>API harvested</h3>
+
+<ul>
+<li>Internal:
+
+<ul>
+<li>CaltechAUTHORS/CaltechTHESIS (EPrints)</li>
+<li>CaltechDATA -(Invenio)</li>
+</ul></li>
+<li>External:
+
+<ul>
+<li><a href="https://orcid.org">ORCID</a> API</li>
+<li><a href="https://api.crossref.org">CrossRef</a> API</li>
+</ul></li>
+</ul>
+
+<h3>Transformation</h3>
+
+<p>We build lists of object keys, then build arrays of objects
+to render</p>
+
+<ul>
+<li>Python 3.6 scripts</li>
+<li><a href="https://caltechlibrary.github.io/dataset">dataset</a></li>
+</ul>
+
+<h3>Redeploy</h3>
+
+<ul>
+<li>We use Python 3.6 scripts walk through site and create/update views</li>
+<li><a href="https://caltechlibrary.github.io/dataset">dataset</a></li>
+<li><a href="https://caltechlibrary.github.io/mkpage">mkpage</a></li>
+</ul>
 
 <p>9</p>
 </div>

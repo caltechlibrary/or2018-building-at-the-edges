@@ -8,7 +8,6 @@ Thomas Morrell, Caltech Library, tomorrell@caltech.edu
 
 https://caltechlibrary.github.io/or2018-building-at-the-edges
 
-0
 --
 <!-- Slide 01 -->
 
@@ -133,23 +132,20 @@ Some of the command line tools...
 + jsoncols, jsonjoin, jsonmunge, jsonrange (for iterating over JSON structures by value or key)
 + xlsx2csv, xlsx2json for extracting sheets from an XLSX Workbook file
 
-Combining these with Unix work horses like *cURL*, *sed*, and *grep* 
+<!-- this shoild be in dialog: Combining these with Unix work horses like *cURL*, *sed*, and *grep* 
 you can get pretty far with your data munging without leaving the 
 command line or simple Bash script.
 
 But if you need to work with a large number of JSON objects ...
-
-7
---
-<!-- Slide 08 -->
-
+-->
 
 # [dataset](https://caltechlibrary.github.io/dataset/)
 
-[dataset](https://caltechlibrary.github.io/dataset/) is about storing and retrieving JSON objects by IDs unique to a collection.
-
++ about storing and retrieving JSON objects by IDs unique to a collection.
 + store on local disc or in cloud (e.g. S3, GCS)
-+ Move between trees and grids
++ import/export to GSheets
++ can be index by Blevesearch and search via the command
++ move between trees and grids
 
 # [mkpage](https://caltechlibrary.github.io/mkpage)
 
@@ -159,9 +155,9 @@ A "page" level content system including a terribly simple static web server
 + JSON friendly
 + A simple set of cli tools to script a content system 
 
-8
+7
 --
-<!-- Slide 09 -->
+<!-- Slide 08 -->
 
 
 # Evolving the right tools
@@ -172,9 +168,9 @@ building an aggregated view of EPrints and Invenio content
 
 **demo**
 
-9
+8
 --
-<!-- Slide 10 -->
+<!-- Slide 09 -->
 
 
 # Use case
@@ -209,9 +205,9 @@ to render
 + [dataset](https://caltechlibrary.github.io/dataset)
 + [mkpage](https://caltechlibrary.github.io/mkpage)
 
-10
+9
 --
-<!-- Slide 11 -->
+<!-- Slide 10 -->
 
 
 # Summerizing
@@ -229,9 +225,9 @@ to render
 Compiled versions for Mac, Windows,
 Linux and Raspberry Pi!
 
-11
+10
 --
-<!-- Slide 14 -->
+<!-- Slide 11 -->
 
 
 # Thank you
@@ -241,4 +237,5 @@ R. S. Doiel, rsdoiel@library.caltech.edu
 Thomas Morrell, Caltech Library, tomorrell@caltech.edu
 
 https://caltechlibrary.github.io/or2018-building-at-the-edges
+
 
