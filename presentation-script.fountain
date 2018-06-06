@@ -51,9 +51,9 @@ Working this way lead us to what I am calling "Continuous Migration".
 ROBERT
 What do I mean by "continuous migration"? 
 (pause)
-We're embracing migration as an ongoing operation rather than an end of life function. This transforms migration costs from technical debt to technical asset. We've found the simple harvest, transform, redeploy pattern useful. We've used this pattern in many solutions from seeding records, to augmenting collection, to migrating systems.
+We're embracing migration as an ongoing operation rather than an end of life function. This transforms migration from technical debt to technical asset. We've found the simple harvest, transform, redeploy pattern useful. We've used this pattern in many solutions from seeding records, to augmenting collection, to migrating systems.
 (pause)
-"Continuous migration" has allowed us to work cheaply on copies of data which has benefited prototyping, testing, debugging, problem diagnosis and reporting.
+Cheap coping has benefited prototyping, testing, debugging, problem diagnosis and reporting. It matches the approach taken in today's data science practice.
 
 .SLIDE FIVE #6#
 
