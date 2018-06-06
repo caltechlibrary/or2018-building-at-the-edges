@@ -86,7 +86,7 @@ Our current poster child for continuous migration and our small tools projects i
 (pause)
 To produce this website we use eprinttools to harvest eprints, a Python package Tom wrote to harvest Invenio, dataset for intermediate result storage, Python scripts using the dataset Python package for moving through harvest, transformation and redeployment and finally our mkpage project for hosting the website and templating some of the results format.
 (pause)
-While feeds is a website the underlying processes are produce a rich resource in themselves. Indeed the harvested contents are kept in S3 buckets which are periodically copied to local disc for everything from data analysis to data correction.
+While feeds is a website with an underlying processes, that process produces a rich resources. Indeed the harvested contents are kept in S3 buckets as dataset collections. These have been periodically copied to local disc for everything from data analysis to data correction.
 
 .SLIDE TEN #10#
 
