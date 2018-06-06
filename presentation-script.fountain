@@ -51,9 +51,9 @@ Working this way lead us to what I am calling "Continuous Migration".
 ROBERT
 What is "continuous migration"? 
 (pause)
-We're embracing migration as an ongoing operation rather than an end of life function. This transforms migration costs from technical dept to technical asset. We've found the simple harvest, transform, redeploy pattern useful. We've used this pattern in many solutions from seeding records, to augmenting collection, to migrating systems.
+We're embracing migration as an ongoing operation rather than an end of life function. This transforms migration costs from technical debt to technical asset. We've found the simple harvest, transform, redeploy pattern useful. We've used this pattern in many solutions from seeding records, to augmenting collection, to migrating systems.
 (pause)
-"Continuous migration" has allowed us to work cheaply on copies data. Cheap copies has benefited both prototyping and debugging and problem diagnosis.
+"Continuous migration" has allowed us to work cheaply on copies of data which has benefited prototyping, testing, debugging, problem diagnosis and reporting.
 
 .SLIDE FIVE #6#
 
@@ -65,7 +65,9 @@ data is more important than the legacy system that holds it, data sustainability
 .SLIDE SIX #7#
 
 ROBERT
-datatools resulted from trying to do more at the Unix command line before writing complex programs. (pause) dataset grew from the need to have an intermediate storage mechanism that was easy to use with minimal deployment overhead 
+datatools resulted from trying to do more at the Unix command line before writing complex programs. 
+(pause) 
+dataset grew from the need to have an intermediate storage mechanism that was easy to use with minimal deployment overhead 
 (pause)
 Some of the other tools projects grew from other needs and challenges we encountered over the last few years. 
 (pause)
@@ -82,7 +84,7 @@ Switch back to presentation and click to slide eight.
 ROBERT
 Our current poster child for continuous migration and our small tools projects is feeds.library.caltech.edu. 
 (pause)
-To produce this website we use eprinttools to havest eprints, a Python package Tom wrote to harvest Invenio, dataset for intermediate result storage, Python scripts using the dataset Python pacakge for moving through harvest, transformation and redeployment and finally our mkpage project for hosting the website and templating some of the results format.
+To produce this website we use eprinttools to harvest eprints, a Python package Tom wrote to harvest Invenio, dataset for intermediate result storage, Python scripts using the dataset Python package for moving through harvest, transformation and redeployment and finally our mkpage project for hosting the website and templating some of the results format.
 (pause)
 While feeds is a website the underlying processes are produce a rich resource in themselves. Indeed the harvested contents are kept in S3 buckets which are periodically copied to local disc for everything from data analysis to data correction.
 
