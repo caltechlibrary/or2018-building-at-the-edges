@@ -1,111 +1,102 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Title: TITLE
+Author: Author's Name
+Draft date:
+	Draft
+	information
+Copyright: Copyright (c) 2018
+Contact:
+	Contact
+	information
 
 
 Building software at the edges of heterogeneous repositories
-
 Open Repositories 2018, Bozeman, MT.
-
-
 by
-
-R. S. Doiel
+R. S. Doiel  
 2018-06-02
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Copyright (c) 2018
-
 First Draft
 
-
-SLIDE ZERO
-
-Start slide presentation.
+.SLIDE ZERO #1#
 
 ROBERT
-Let me start with some context. Caltech is a small institution and the Library and Archives at Caltech are a small part of a small institution. Digital Library Development is a small group in a small library, two programmers and two librarian/programmers. Caltech is about research and that very much influences the role or our Library and subsequently how I've learned to develop software for our Library since arriving at three years ago.
+Let me start with some context. Caltech is a small institution and the Library and Archives at Caltech are a small part of a small institution. Digital Library Development is a small group in a small library, two programmers and two librarian developers. Caltech is about research and that very much influences the role or our Library.
+(pause)
+Since I arrived three years ago it influenced how I learned to develop software for our Library.
 
-SLIDE ONE
-
-ROBERT
-Historically Caltech Library developed inside the software systems we adopted.  This made sense for a while. About three years ago the Digital Library Development group started shifting away from that even as our staff grew from one to four.  What changed was the need to aggregate between systems. Initially this was a result of migrating a home grown Archives Management System to ArchivesSpace which was followed by a migration of one catalog system to another. Then can data analysis needs and eventually an aggregation project emerge. It was during this period that we really started to leverage the API.
-
-
-SLIDE TWO
+.SLIDE ONE #2#
 
 ROBERT
-We have a diversity of repositories and catalog systems. (show slide) Each has a unique approach and development environment, some are new and some are on their way to legacy. The group I am in is responsible for both maintenance and new software development. These systems are all complex and as with most complex systems evolutionary transformation becomes more difficult with age. (pause) Historically development was focused around customization, theming and plugin development with each system offering a unique set of challenged and approach. (paus) In the short time I've been at Caltech Library collectively we've changed our focus from working inside each system to working at the edges. I believe this has allowed us to turn our constraints into an asset.
+Historically Caltech Library developed inside the software systems we adopted.  This made sense for a while. About three years ago the Digital Library Development group started shifting away from that. What changed was the types of demands we placed on our systems. It started with migrating a home grown Archives Management System to ArchivesSpace, quickly followed by a hasty migration of our catalog system. The adoption of a different platform for our data repository. At the same time we had the need to do serious data analysis for decision making in the library. Eventually we needed an ability to create an aggregated view of all our various systems.
+(pause)
+These demands lead to exploring two concepts and a number of small tools projects. Two I'll be demoing today.
 
-
-SLIDE THREE
-
-ROBERT
-All our systems have web API. They support either XML or JSON. Without changing these systems we can change their roles. They are now data sources or destinations instead of platforms that must fill all needs such as discovery, delivery, ingest, content management or final end user interaction. Instead each system is allowed to do what it.
-
-
-SLIDE FOUR
+.SLIDE TWO #3#
 
 ROBERT
-Embracing migration as an ongoing operation rather than an end of life function transforms migration costs from technical dept to technical asset. We've found the simple harvest, transform, redeploy pattern useful in solving many solutions from seeding records to augmenting them. Continuous migration has also ment we can cheaply work on copies data. This has benefits from prototyping to diagnosis problem issues that arrise in any complex system over time. 
+We have a diversity of repositories and catalog systems. 
+(show slide)
+Each has a unique approach and development environment, some are new and some are on their way to legacy. The group I am in is responsible for both maintenance and new software development.  These systems are all complex and as with most complex systems evolutionary transformation becomes more difficult with age.
+(pause)
+Historically development was focused around customization, theme and plugin development with each system offering a unique set of challenges and approach. This became problematic and we needed to change.
+(pause)
+Collectively we changed our focus from working inside each system to working at the edges. I believe this has allowed us to turn our constraints into an asset.
 
-SLIDE FIVE
-
-. FIXME: introduce datatools, dataset and mkpage and demo indivudally as well as collectively.
-
-ROBERT
-Datatools resulted from trying to do more at the Unix command line before reaching to write complex programs. These tools are written in the Go language and are compiled. Go compiles what are called static binaries which means everything that is needed is in the one executable program.  It is trivial to cross compile for many platforms and we do so - Linux, Windows, Mac OS X and even for Raspberry Pis. Datatools is focused on easing command line interaction with JSON and in making simple shell scripts easier to write and read. After getting data harvested from a web API we can reshape it pretty easily. (Demo xlsx2csv).
-
-SLIDE ELEVEN
-
-Switch back to presentation and click to slide 11.
+.SLIDE THREE #4#
 
 ROBERT
-The second project grew out of migrating data. I needed to have a simple way of saving JSON objects and their occasional attachments. Dataset is about saving and retrieving JSON objects during your data flow. It is not a database, it is single user but does include the ability to do full text indexing thanks to a project call Bleve from the people who work with couch. It works well in a Unix pipe line and is easily script. My colleague Tom wrote the first Python wrapper round it. After see what it solved for him I wrote a Python package which now wraps a shared library version of dataset. Like datatools dataset is written in Go but increasing the use of dataset cli is being replaced by usage inside Python scripts. (Do dataset demo)
+All our systems have web API. They support either XML or JSON. Without changing these systems we can change their roles. They are now data sources or destinations instead of platforms that must fulfill all needs such as discovery, delivery, ingest, content management or final end user interaction. Instead each system is allowed to do what it is best at. 
+(pause)
+To enable this we've adopted some heuristics.
+(pause)
+Prefer a WEB API over direct SQL manipulation, favor modeled data over SQL Schema, avoid customization and plugin development. 
+(pause)
+A corollary is script data flow, perform transformations on copies and have a mechanism to hold intermediate results. 
+(pause)
+Working this way lead us to what I am calling "Continuous Migration". 
 
-SLIDE TWELVE
-
-Switch back to slide twelve.
+.SLIDE FOUR #5#
 
 ROBERT
-As mentioned mkpage, like datatools and dataset is a Go based set of utilities. It's focus is on static site generation and delivery. I think of it as a deconstructed content management system stripped of databases, authoring tools and storage. This project is what lets us deliver feeds.library.caltech.edu. Feeds is our poster child for edge development. We harvest both EPrints and Invenio repositories and will soon integrate content from our campus directory as well as the Archives. While the website is about feeds the underlining processes are about repurposing contents for a wide variety of needs. We use dataset colections as read sources in our data analysis and reporting. We use those same collections to provide data feedback to our systems of "truth". (demo feeds)
+What is "continuous migration"? 
+(pause)
+We're embracing migration as an ongoing operation rather than an end of life function. This transforms migration costs from technical dept to technical asset. We've found the simple harvest, transform, redeploy pattern useful. We've used this pattern in many solutions from seeding records, to augmenting collection, to migrating systems.
+(pause)
+"Continuous migration" has allowed us to work cheaply on copies data. Cheap copies has benefited both prototyping and debugging and problem diagnosis.
 
-SLIDE THIRTEEN, FOURTEEN
-
-Click through thirteen and land and fourteen.
+.SLIDE FIVE #6#
 
 ROBERT
-I know i have moved very quickly through some of our work in progress so please reach out to me or Tom is you'd like a more in depth conversation. While Caltech may be a bit unique i think what we're finding can be helpful to other organizations regardless of size. You are welcome to use or fork our projects and we accept pull requests if have one. Thank you for your time. Bye.
+The experience of working this way has lead to some epiphanies. 
+(pause, point at slide)
+data is more important than the legacy system that holds it, data sustainability benefits from simple structures, it maybe easier to sustain data then to sustain complex systems.
 
+.SLIDE SIX #7#
 
+ROBERT
+datatools resulted from trying to do more at the Unix command line before writing complex programs. (pause) dataset grew from the need to have an intermediate storage mechanism that was easy to use with minimal deployment overhead 
+(pause)
+Some of the other tools projects grew from other needs and challenges we encountered over the last few years. 
+(pause)
+Each of these projects some something in common. They start out as command line programs written in the Go language.  Command line programs are easy to develop as long as you keep them simple in functionality. Go has a rich standard library with can be easy cross compiled allowing us to support a wide number of systems. These include Mac OX X and Windows on Intel but also Linux and even Raspberry Pi computers.  Go is a compiled language. By default it produces what is called a static binary executable. The means everything needed to run the command is in one file and installation is a matter of copying it to the desired system. More recently we've also started creating shared libraries which allow us to use these same tools to be used from within Python 3.6.
 
+.SLIDE SEVEN #8#
+
+Demo on the command line extracting a sheet from an Excel Workbook, storing the resulting rows as individual JSON objects in a friends dataset collection. Use the ORCIDs in some of the friends records to pull a list of keys from feeds.library.caltech.edu. Pull in these records into a local Authors collection. Index the titles, keywords, and names and search for Chemistry and Biology in the resulting collection.
+
+.SLIDE EIGHT #9#
+
+Switch back to presentation and click to slide eight.
+
+ROBERT
+Our current poster child for continuous migration and our small tools projects is feeds.library.caltech.edu. 
+(pause)
+To produce this website we use eprinttools to havest eprints, a Python package Tom wrote to harvest Invenio, dataset for intermediate result storage, Python scripts using the dataset Python pacakge for moving through harvest, transformation and redeployment and finally our mkpage project for hosting the website and templating some of the results format.
+(pause)
+While feeds is a website the underlying processes are produce a rich resource in themselves. Indeed the harvested contents are kept in S3 buckets which are periodically copied to local disc for everything from data analysis to data correction.
+
+.SLIDE TEN #10#
+
+ROBERT
+I know i have moved very quickly. You are welcome to use or fork our projects. Thank you for your time and I am happy to answer any questions as best I can.
 
