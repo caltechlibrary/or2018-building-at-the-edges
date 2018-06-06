@@ -18,7 +18,7 @@ Since I arrived three years ago it influenced how I learned to develop software 
 .SLIDE ONE #2#
 
 ROBERT
-Historically Caltech Library developed inside the software systems we adopted.  This made sense for a while. About three years ago the Digital Library Development group started shifting away from that. What changed was the types of demands we placed on our systems. It started with migrating a home grown Archives Management System to ArchivesSpace, quickly followed by a hasty migration of our catalog system. The adoption of a different platform for our data repository. At the same time we had the need to do serious data analysis for decision making in the library. Eventually we needed an ability to create an aggregated view of all our various systems.
+Historically Caltech Library developed inside the software systems we adopted.  This made sense for a while. About three years ago the Digital Library Development group started shifting away from that. What changed was the types of demands we placed on our systems. It started with migrating a home grown Archives Management System to ArchivesSpace, quickly followed by a hasty migration of our catalog system. The catalog migration lead to the adoption of a different platform for our data repository than our authors and thesis repositories. At the same time we had the need to do serious data analysis for decision making in the library. Eventually we needed an ability to create an aggregated view of all our various systems.
 (pause)
 These demands lead to exploring two concepts and a number of small tools projects. Two I'll be demoing today.
 
