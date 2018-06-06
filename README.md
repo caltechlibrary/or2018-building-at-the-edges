@@ -15,3 +15,5 @@ Caltech Library has a heterogeneous mix of repository systems (e.g. EPrints host
 	+ https://github.com/caltechlibrary/datatools/releases/latest
 
 [Presentation](00-building-software-at-the-edges.html)
+
+[Narration](presentation-script.fountain)

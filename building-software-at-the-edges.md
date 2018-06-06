@@ -80,7 +80,7 @@ Practicing this showed us **Continuous Migration**
 <!-- Slide 04 -->
 
 
-# What is "Continuous Migration"?
+# What do I mean by "Continuous Migration"?
 
 + The ability to moving your data into and out of your system(s) via API
 + The act of migrating your data as a regular practice

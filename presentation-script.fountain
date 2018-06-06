@@ -11,7 +11,7 @@ Contact:
 .SLIDE ZERO #1#
 
 ROBERT
-Let me start with some context. Caltech is a small institution and the Library and Archives at Caltech are a small part of a small institution. Digital Library Development is a small group in a small library, two programmers and two librarian developers. Caltech is about research and that very much influences the role or our Library.
+Let me start with some context. Caltech is a small institution and the Library and Archives at Caltech are a small part of a small institution. Digital Library Development is a small group in a small library, two programmers and two librarian developers. Caltech is about research and that very much influences our Library.
 (pause)
 Since I arrived three years ago it influenced how I learned to develop software for our Library.
 
@@ -20,7 +20,7 @@ Since I arrived three years ago it influenced how I learned to develop software 
 ROBERT
 Historically Caltech Library developed inside the software systems we adopted.  This made sense for a while. About three years ago the Digital Library Development group started shifting away from that. What changed was the types of demands we placed on our systems. It started with migrating a home grown Archives Management System to ArchivesSpace, quickly followed by a hasty migration of our catalog system. The catalog migration lead to the adoption of a different platform for our data repository than our authors and thesis repositories. At the same time we had the need to do serious data analysis for decision making in the library. Eventually we needed an ability to create an aggregated view of all our various systems.
 (pause)
-These demands lead to exploring two concepts and a number of small tools projects. Two I'll be demoing today.
+These demands lead to exploring two concepts and a number of small tools projects. I'll be demoing a few today.
 
 .SLIDE TWO #3#
 
@@ -31,7 +31,7 @@ Each has a unique approach and development environment, some are new and some ar
 (pause)
 Historically development was focused around customization, theme and plugin development with each system offering a unique set of challenges and approach. This became problematic and we needed to change.
 (pause)
-Collectively we changed our focus from working inside each system to working at the edges. I believe this has allowed us to turn our constraints into an asset.
+Collectively we changed our focus from working inside each system to working at the edges. I believe this has allowed us to turn our constraints into an assets.
 
 .SLIDE THREE #4#
 
@@ -42,14 +42,14 @@ To enable this we've adopted some heuristics.
 (pause)
 Prefer a WEB API over direct SQL manipulation, favor modeled data over SQL Schema, avoid customization and plugin development. 
 (pause)
-A corollary is script data flow, perform transformations on copies and have a mechanism to hold intermediate results. 
+A corollary is script data flow, perform transformations on copies and have a simple mechanism to hold intermediate results. I'll be demonstrating our approach to that.
 (pause)
 Working this way lead us to what I am calling "Continuous Migration". 
 
 .SLIDE FOUR #5#
 
 ROBERT
-What is "continuous migration"? 
+What do I mean by "continuous migration"? 
 (pause)
 We're embracing migration as an ongoing operation rather than an end of life function. This transforms migration costs from technical debt to technical asset. We've found the simple harvest, transform, redeploy pattern useful. We've used this pattern in many solutions from seeding records, to augmenting collection, to migrating systems.
 (pause)
