@@ -1,0 +1,111 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Building software at the edges of heterogeneous repositories
+
+Open Repositories 2018, Bozeman, MT.
+
+
+by
+
+R. S. Doiel
+2018-06-02
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Copyright (c) 2018
+
+First Draft
+
+
+SLIDE ZERO
+
+Start slide presentation.
+
+ROBERT
+Let me start with some context. Caltech is a small institution and the Library and Archives at Caltech are a small part of a small institution. Digital Library Development is a small group in a small library, two programmers and two librarian/programmers. Caltech is about research and that very much influences the role or our Library and subsequently how I've learned to develop software for our Library since arriving at three years ago.
+
+SLIDE ONE
+
+ROBERT
+Historically Caltech Library developed inside the software systems we adopted.  This made sense for a while. About three years ago the Digital Library Development group started shifting away from that even as our staff grew from one to four.  What changed was the need to aggregate between systems. Initially this was a result of migrating a home grown Archives Management System to ArchivesSpace which was followed by a migration of one catalog system to another. Then can data analysis needs and eventually an aggregation project emerge. It was during this period that we really started to leverage the API.
+
+
+SLIDE TWO
+
+ROBERT
+We have a diversity of repositories and catalog systems. (show slide) Each has a unique approach and development environment, some are new and some are on their way to legacy. The group I am in is responsible for both maintenance and new software development. These systems are all complex and as with most complex systems evolutionary transformation becomes more difficult with age. (pause) Historically development was focused around customization, theming and plugin development with each system offering a unique set of challenged and approach. (paus) In the short time I've been at Caltech Library collectively we've changed our focus from working inside each system to working at the edges. I believe this has allowed us to turn our constraints into an asset.
+
+
+SLIDE THREE
+
+ROBERT
+All our systems have web API. They support either XML or JSON. Without changing these systems we can change their roles. They are now data sources or destinations instead of platforms that must fill all needs such as discovery, delivery, ingest, content management or final end user interaction. Instead each system is allowed to do what it.
+
+
+SLIDE FOUR
+
+ROBERT
+Embracing migration as an ongoing operation rather than an end of life function transforms migration costs from technical dept to technical asset. We've found the simple harvest, transform, redeploy pattern useful in solving many solutions from seeding records to augmenting them. Continuous migration has also ment we can cheaply work on copies data. This has benefits from prototyping to diagnosis problem issues that arrise in any complex system over time. 
+
+SLIDE FIVE
+
+. FIXME: introduce datatools, dataset and mkpage and demo indivudally as well as collectively.
+
+ROBERT
+Datatools resulted from trying to do more at the Unix command line before reaching to write complex programs. These tools are written in the Go language and are compiled. Go compiles what are called static binaries which means everything that is needed is in the one executable program.  It is trivial to cross compile for many platforms and we do so - Linux, Windows, Mac OS X and even for Raspberry Pis. Datatools is focused on easing command line interaction with JSON and in making simple shell scripts easier to write and read. After getting data harvested from a web API we can reshape it pretty easily. (Demo xlsx2csv).
+
+SLIDE ELEVEN
+
+Switch back to presentation and click to slide 11.
+
+ROBERT
+The second project grew out of migrating data. I needed to have a simple way of saving JSON objects and their occasional attachments. Dataset is about saving and retrieving JSON objects during your data flow. It is not a database, it is single user but does include the ability to do full text indexing thanks to a project call Bleve from the people who work with couch. It works well in a Unix pipe line and is easily script. My colleague Tom wrote the first Python wrapper round it. After see what it solved for him I wrote a Python package which now wraps a shared library version of dataset. Like datatools dataset is written in Go but increasing the use of dataset cli is being replaced by usage inside Python scripts. (Do dataset demo)
+
+SLIDE TWELVE
+
+Switch back to slide twelve.
+
+ROBERT
+As mentioned mkpage, like datatools and dataset is a Go based set of utilities. It's focus is on static site generation and delivery. I think of it as a deconstructed content management system stripped of databases, authoring tools and storage. This project is what lets us deliver feeds.library.caltech.edu. Feeds is our poster child for edge development. We harvest both EPrints and Invenio repositories and will soon integrate content from our campus directory as well as the Archives. While the website is about feeds the underlining processes are about repurposing contents for a wide variety of needs. We use dataset colections as read sources in our data analysis and reporting. We use those same collections to provide data feedback to our systems of "truth". (demo feeds)
+
+SLIDE THIRTEEN, FOURTEEN
+
+Click through thirteen and land and fourteen.
+
+ROBERT
+I know i have moved very quickly through some of our work in progress so please reach out to me or Tom is you'd like a more in depth conversation. While Caltech may be a bit unique i think what we're finding can be helpful to other organizations regardless of size. You are welcome to use or fork our projects and we accept pull requests if have one. Thank you for your time. Bye.
+
+
+
+

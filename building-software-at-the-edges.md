@@ -2,6 +2,8 @@
 
 # Building software at the edges of heterogeneous repositories
 
+## the road to continuous migration
+
 R. S. Doiel, Caltech Library, rsdoiel@library.caltech.edu
 
 Thomas Morrell, Caltech Library, tomorrell@caltech.edu
@@ -14,9 +16,9 @@ https://caltechlibrary.github.io/or2018-building-at-the-edges
 # Overview
 
 Caltech Library has shifted from a system centric
-to a data centric approach in developing software. 
+to a data centric software development.
 
-This lead to two concepts and three tools projects.
+This lead to two concepts and several tools projects.
 
 ## Concepts
 
@@ -25,12 +27,12 @@ This lead to two concepts and three tools projects.
 
 ## Open Source Projects
 
-+ [datatools](https://github.com/caltechlibrary/datatools)
-	+ tools to help converting and extracting data a the command line easier
 + [dataset](https://github.com/caltechlibrary/dataset)
 	+ storing, retrieving, manage JSON documents on disc and in the cloud
-+ [mkpage](https://github.com/caltechlibrary/mkpage)
-	+ A deconstructed web content management system
++ [datatools](https://github.com/caltechlibrary/datatools)
+	+ tools to help converting and extracting data a the command line easier
++ legacy projects: [mkpage](https://github.com/caltechlibrary/mkpage), [eprinttools](https://github.com/caltechlibrary/eprinttools), [cait](https://caltechlibrary/cait)
+
 
 1
 --
@@ -65,11 +67,11 @@ Lots of languages to support. No single system fulfills our needs.
 + Web API are the edge of a system
     + Prefer Web API over direct SQL manipulation
     + Favor data models over SQL Scheme
-+ When Web API is missing or two complicated
-	+ Look at a plugin option that supports standards
-+ Focus on data models and data flow
-    + Script data flow and transformation
     + Avoid system plugins and customization
++ Focus on data models and data flow
+    + Script data flow
+    + Use copies for transformation
+    + Have a mechanism to hold intermediate results
 
 Practicing this showed us **Continuous Migration**
 
@@ -100,8 +102,8 @@ Practicing this showed us **Continuous Migration**
 Our experience has shown us
 
 + Data is more important then (legacy) system that holds it
-+ Sustainability of data is enhanced by simple structures
-+ Data sustainability may be easier to achieve than software sustainability
++ Data sustainability benefits from simple structures
++ It maybe easier to sustain data than to sustain complex software systems
 
 5
 --
@@ -115,9 +117,7 @@ Our experience has shown us
 + [dataset](https://caltechlibrary.github.io/dataset/) 
     + for holds copies of data during processing 
     + or between steps in a data pipeline
-+ [mkpage](https://caltechlibrary.github.io/mkpage/) 
-    + a Markdown/JSON friendly rendering engine 
-    + and terribly simple web server
++ Other projects include: [mkpage](https://caltechlibrary.github.io/mkpage/), [eprinttools](https://github.com/caltechlibrary/eprinttools/)
 
 6
 --
