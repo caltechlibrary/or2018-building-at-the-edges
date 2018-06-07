@@ -1,2 +1,2 @@
 #!/bin/bash
-rm -fR *.ds *.csv *.keys
+rm -fR *.ds *.csv *.keys *.bak *.json *.log *.timing

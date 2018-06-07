@@ -1,0 +1,15 @@
+{
+    "title": {
+        "object_path": ".title"
+    },
+    "creators": {
+        "object_path": ".creators.items"
+    },
+    "keywords": {
+        "object_path": ".keywords"
+    },
+    "funders": {
+        "object_path": ".funders"
+    }
+}
+
