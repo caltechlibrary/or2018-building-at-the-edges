@@ -1,0 +1,1543 @@
+Script started on 2018-06-07 12:30:18-0600
+#
+Setting up aliases
+$ #
+$ # Demo showing some basic functionality of dataset and
+$ # some of the programs from datatools.
+$ #
+$ 
+$ # Unpack some CSV from our Excel Workbook
+$ xlsx2csv -nl -N demo-data.xlsx | while read -r SHEET; do
+> xlsx2csv -o "${SHEET}.csv" demo-data.xlsx "${SHEET}"
+> done
+$ 
+$ # Create an initial empty dataset, tree shows the structure on disc
+$ dataset init friends.ds
+OK
+$ tree friends.ds
+[01;34mfriends.ds[00m
+└── collection.json
+
+0 directories, 1 file
+$ 
+$ # Add an object of my friend Eamonn
+$ dataset friends.ds create eamonn '{"name":"Eamonn"}'
+OK
+$ 
+$ # This OK meant things worked, set's see what we saved
+$ dataset -p friends.ds read eamonn
+{
+    "_Key": "eamonn",
+    "name": "Eamonn"
+}
+$ 
+$ # the tree command will show the change on disc, notice eamonn.json
+$ # is in a bucket called "aa", json objects are stored in buckets
+$ # in a round robin fashion, aa to zz
+$ tree friends.ds
+[01;34mfriends.ds[00m
+├── [01;34maa[00m
+│   └── eamonn.json
+└── collection.json
+
+1 directory, 2 files
+$ 
+$ # Let's update the record outside dataset
+$ dataset -p friends.ds read eamonn >eamonn.json
+$ 
+$ # I am using sed to change my JSON object
+$ sed -i.bak -s "s/Eamonn/Eamonn O'Gorman/g" eamonn.json
+$ 
+$ # Now I am to send my changes back into our collection
+$ dataset friends.ds update eamonn eamonn.json
+OK
+$ 
+$ # Now check our change
+$ dataset -p friends.ds read eamonn
+{
+    "_Key": "eamonn",
+    "name": "Eamonn O'Gorman"
+}
+$ 
+$ #
+$ # Let's add more friends
+$ #
+$ dataset friends.ds import-csv friends-with-orcids.csv 1
+OK
+$ # How many records do we have now?
+$ dataset friends.ds count
+9
+$ # What are the keys?
+$ dataset friends.ds keys
+eamonn
+frieda
+jack
+mark
+mike
+stephen
+mojo
+robert
+tom
+$ # What so those records look like
+$ dataset friends.ds keys | while read -r KEY; do
+> dataset friends.ds read "${KEY}"
+> done
+{"Catch Phrase":"Oops, I just deleted everything","ID":"robert","Name":"Robert Doiel","_Key":"robert","orcid":"0000-0003-0900-6903"}
+{"_Key":"eamonn","name":"Eamonn O'Gorman"}
+{"Catch Phrase":"Wowee Zowee","ID":"frieda","Name":"Little Frieda","_Key":"frieda"}
+{"Catch Phrase":"Robert, maybe you shouldn’t","ID":"mark","Name":"Mark Doiel","_Key":"mark","orcid":"0000-0001-7321-1464"}
+{"Catch Phrase":"","ID":"mike","Name":"Mike Hucka","_Key":"mike","orcid":"0000-0001-9105-5960"}
+{"Catch Phrase":"What is coming at you is coming from you","ID":"jack","Name":"Jack Flanders","_Key":"jack"}
+{"Catch Phrase":"Feet Don't Fail Me Now!","ID":"mojo","Name":"Mojo Sam, the Yudoo Man","_Key":"mojo"}
+{"Catch Phrase":"","ID":"stephen","Name":"Stephen Davison","_Key":"stephen","orcid":"0000-0003-0102-8200"}
+{"Catch Phrase":"","ID":"tom","Name":"Tom Morrell","_Key":"tom","orcid":"0000-0001-9266-5146"}
+$ 
+$ # Can I get just the records with ORCIDS?
+$ dataset friends.ds keys '(ne .orcid "")' >orcid-friends.keys
+$ 
+$ # How do I list only the orcids? I'm going to use a data frame for that
+$ dataset friends.ds frame 'orcid-friends' orcid-friends.keys .name .orcid
+{
+  "frame_name": "orcid-friends",
+  "collection_name": "friends.ds",
+  "dot_paths": [
+    "._Key",
+    ".name",
+    ".orcid"
+  ],
+  "keys": [
+    "mike",
+    "robert",
+    "tom",
+    "mark",
+    "stephen"
+  ],
+  "grid": [
+    [
+      "mike",
+      null,
+      "0000-0001-9105-5960"
+    ],
+    [
+      "robert",
+      null,
+      "0000-0003-0900-6903"
+    ],
+    [
+      "tom",
+      null,
+      "0000-0001-9266-5146"
+    ],
+    [
+      "mark",
+      null,
+      "0000-0001-7321-1464"
+    ],
+    [
+      "stephen",
+      null,
+      "0000-0003-0102-8200"
+    ]
+  ],
+  "created": "2018-06-07T12:32:11.741917924-06:00",
+  "updated": "2018-06-07T12:32:11.74191806-06:00",
+  "labels": [
+    "_Key",
+    "name",
+    "orcid"
+  ],
+  "column_types": [
+    "string",
+    "string",
+    "string"
+  ]
+}
+$ dataset friends.ds frame 'orcid-friends' | jq .
+[1;39m{
+  [0m[34;1m"frame_name"[0m[1;39m: [0m[0;32m"orcid-friends"[0m[1;39m,
+  [0m[34;1m"collection_name"[0m[1;39m: [0m[0;32m"friends.ds"[0m[1;39m,
+  [0m[34;1m"dot_paths"[0m[1;39m: [0m[1;39m[
+    [0;32m"._Key"[0m[1;39m,
+    [0;32m".name"[0m[1;39m,
+    [0;32m".orcid"[0m[1;39m
+  [1;39m][0m[1;39m,
+  [0m[34;1m"keys"[0m[1;39m: [0m[1;39m[
+    [0;32m"mike"[0m[1;39m,
+    [0;32m"robert"[0m[1;39m,
+    [0;32m"tom"[0m[1;39m,
+    [0;32m"mark"[0m[1;39m,
+    [0;32m"stephen"[0m[1;39m
+  [1;39m][0m[1;39m,
+  [0m[34;1m"grid"[0m[1;39m: [0m[1;39m[
+    [1;39m[
+      [0;32m"mike"[0m[1;39m,
+      [1;30mnull[0m[1;39m,
+      [0;32m"0000-0001-9105-5960"[0m[1;39m
+    [1;39m][0m[1;39m,
+    [1;39m[
+      [0;32m"robert"[0m[1;39m,
+      [1;30mnull[0m[1;39m,
+      [0;32m"0000-0003-0900-6903"[0m[1;39m
+    [1;39m][0m[1;39m,
+    [1;39m[
+      [0;32m"tom"[0m[1;39m,
+      [1;30mnull[0m[1;39m,
+      [0;32m"0000-0001-9266-5146"[0m[1;39m
+    [1;39m][0m[1;39m,
+    [1;39m[
+      [0;32m"mark"[0m[1;39m,
+      [1;30mnull[0m[1;39m,
+      [0;32m"0000-0001-7321-1464"[0m[1;39m
+    [1;39m][0m[1;39m,
+    [1;39m[
+      [0;32m"stephen"[0m[1;39m,
+      [1;30mnull[0m[1;39m,
+      [0;32m"0000-0003-0102-8200"[0m[1;39m
+    [1;39m][0m[1;39m
+  [1;39m][0m[1;39m,
+  [0m[34;1m"created"[0m[1;39m: [0m[0;32m"2018-06-07T12:32:11.741917924-06:00"[0m[1;39m,
+  [0m[34;1m"updated"[0m[1;39m: [0m[0;32m"2018-06-07T12:32:11.74191806-06:00"[0m[1;39m,
+  [0m[34;1m"labels"[0m[1;39m: [0m[1;39m[
+    [0;32m"_Key"[0m[1;39m,
+    [0;32m"name"[0m[1;39m,
+    [0;32m"orcid"[0m[1;39m
+  [1;39m][0m[1;39m,
+  [0m[34;1m"column_types"[0m[1;39m: [0m[1;39m[
+    [0;32m"string"[0m[1;39m,
+    [0;32m"string"[0m[1;39m,
+    [0;32m"string"[0m[1;39m
+  [1;39m][0m[1;39m
+[1;39m}[0m
+$ 
+$ # Let's git the values out of the grid attribute of the frame
+$ dataset friends.ds frame orcid-friends | jsoncols '.grid[:][2]' |
+> jsonrange -i - -values
+"0000-0001-9105-5960"
+"0000-0003-0900-6903"
+"0000-0001-9266-5146"
+"0000-0001-7321-1464"
+"0000-0003-0102-8200"
+$ 
+$ # We're going save those orcids as a set of keys.
+$ dataset friends.ds frame orcid-friends | jsoncols '.grid[:][2]' |
+> jsonrange -i - -values >orcids.keys
+$ 
+$ # Now, for each ORCID we're going to fetch from
+$ # feeds.library.caltech.edu/person/ORCID/(articles|data).keys
+$ cat orcids.keys | sed -E 's/"//g' | while read -r ORCID; do
+> curl -o tmp.keys "https://feeds.library.caltech.edu/person/${ORCID}/articles.keeys"
+> cat tmp.keys >>"articles.keys"
+> done
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100   326  100   326    0     0   1051      0 --:--:-- --:--:-- --:--:--  1048
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    19  100    19    0     0     60      0 --:--:-- --:--:-- --:--:--    60
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    19  100    19    0     0     62      0 --:--:-- --:--:-- --:--:--    62
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    19  100    19    0     0     61      0 --:--:-- --:--:-- --:--:--    61
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0100    19  100    19    0     0     62      0 --:--:-- --:--:-- --:--:--    62
+$ 
+$ # We need to do some data clean up.
+$ #   + Get rid of any "404 page not found" messages
+$ #   + Get rid of empty lines
+$ #   + Sort the keys (just so it is easy to track)
+$ mv articles.keys tmp.keys
+$ cat tmp.keys | sed -E 's/404 page not found//g' | sort -u -n | sed -E '/^$/d' >>articles.keys
+$ 
+$ # Let's create a new collection called articles.ds where we can
+$ # save a subset of the articles found in
+$ #     s3://dataset.library.caltech.edu/CaltechAUTHORS
+$ dataset init articles.ds
+OK
+$ 
+$ # Now with each articles.keys we read a JSON object out of our
+$ # S3 based collection to our local collection.
+$ # If it works we should see our friendly "OK" for each copy
+$ cat articles.keys | while read -r KEY; do
+> echo -n "Copying ${KEY} "
+> dataset s3://dataset.library.caltech.edu/CaltechAUTHORS read "${KEY}" | datasett -i - articles.ds create "${KEY}"
+> done
+Copying 1630 # Now we should see a bunch of articles copied...
+OK
+Copying 2099 
+OK
+Copying 4243 
+OK
+Copying 14113 # Build the indexes
+OK
+Copying 15225 dataset articles.ds indexer articles.bleve index-defs/articles.json
+OK
+Copying 15322 OK
+Copying 20219 OK
+Copying 20516 
+OK
+Copying 20768 OK
+Copying 20769 # Basic search of an index
+OK
+Copying 20770 OK
+Copying 21230 OK
+Copying 23793 dataset find articles.bleve 'National Science Foundation'
+OK
+Copying 24569 # This is a JSON version of the results
+OK
+Copying 24676 OK
+Copying 26314 OK
+Copying 27322 dataset -p -json find articles.bleve 'National Science Foundation'
+OK
+Copying 27973 OK
+Copying 30145 # This is a version only returning the ids
+OK
+Copying 35084 dataset -ids find articles.bleve 'National Science Foundation'
+OK
+Copying 35110 
+OK
+Copying 35124 OK
+Copying 35132 OK
+Copying 35133 # That's the demo, all done
+OK
+Copying 35134 OK
+Copying 35274 exit 0
+OK
+Copying 36088 OK
+Copying 36089 OK
+Copying 36101 OK
+Copying 36102 OK
+Copying 36103 OK
+Copying 36104 OK
+Copying 36105 OK
+Copying 36252 OK
+Copying 36254 OK
+Copying 36301 OK
+Copying 36335 OK
+Copying 36338 OK
+Copying 39087 OK
+Copying 43160 OK
+Copying 43775 OK
+Copying 48618 OK
+Copying 52298 OK
+Copying 54463 OK
+Copying 55828 OK
+Copying 58566 OK
+Copying 61262 OK
+Copying 64594 OK
+Copying 69034 OK
+Copying 72979 OK
+Copying 73005 OK
+Copying 81190 OK
+Copying 85360 OK
+Copying 85447 OK
+Copying 85862 OK
+$ # Now we should see a bunch of articles copied...
+$ 
+$ 
+$ # Build the indexes
+$ dataset articles.ds indexer articles.bleve index-defs/articles.json
+2018/06/07 12:34:45 0/55 records indexed, batch time (100) 659ns, running time 836ns
+2018/06/07 12:34:45 55/55 records indexed, batch time (100) 86.455404ms, running time 86.455837ms
+2018/06/07 12:34:45 55/55 records indexed, running time 86.531176ms
+OK
+$ 
+$ # Basic search of an index
+$ dataset find articles.bleve 'National Science Foundation'
+23 matches, showing 1 through 12, took 1.221174ms
+    1. 39087 (0.538765)
+	creators.name.given
+		[Ines Michael]
+	creators.orcid
+		0000-0001-9105-5960
+	funders.items.agency
+		[Marie Curie Fellowship European Research Council (ERC) Rannis research grant Biotechnology and Biological Sciences Research Council (BBSRC) Engineering and Physical Sciences Research Council (EPSRC) Bioprocessing Research Industry Club  European Union Knut and Alice Wallenberg Foundation Biotechnology and Biological Sciences Research Council (BBSRC) Biotechnology and Biological Sciences Research Council (BBSRC) Bundesministerium für Bildung und Forschung (BMBF) Bundesministerium für Bildung und Forschung (BMBF) NIH NSF Cystic Fibrosis Research Foundation National Cancer Institute Science and Technology Facilities Council (STFC) NIH NIH Netherlands Bioinformatics Centre BioRange programme Netherlands Genomics Initiative]
+	funders.items.grant_number
+		[249261 232816 100406022 BB/C008219/1 201142 BB/F005938 BB/F00561X 0315756 0315741 GM088244 CBET-0643548 1060 R01GM070923 R01GM080219 SP1.2.4]
+	title
+		A community-driven global reconstruction of human metabolism
+	creators.id
+		[Thiele-I Hucka-M]
+	creators.name.family
+		[Thiele Hucka]
+    2. 20769 (0.223611)
+	creators.id
+		Hucka-M
+	creators.name.family
+		Hucka
+	creators.name.given
+		Michael
+	creators.orcid
+		0000-0001-9105-5960
+	keywords
+		biotechnology, Bioinformatics
+	funders.items.agency
+		[National Institute of General Medical Sciences (USA) JST (Japan Science and Technology Agency) ERATO (Exploratory Research for Advanced Technology) Kitano Symbiotic Systems Project (Japan) NSF International Joint Research Program of NEDO (Japan) JST (Japan Science and Technology Agency) ERATO (Exploratory Research for Advanced Technology) SORTS (Solution Oriented Research for Science and Technology) Program Japanese Ministry of Agriculture Japanese Ministry of Education,  Culture, Sports, Science and Technology Biotechnology and Biological Sciences Research Council (BBSRC) e-Science Initiative (UK) DARPA (Defense Advanced Research Projects Agency) IPTO ( Information Processing Techniques Office) Bio-Computation Program  Air Force Office of Scientific Research STRI (Science and Technology Research Institute), University of Hertfordshire (UK) Beckman Institute, Caltech]
+	title
+		SBML, BioModels.net, and SBGN
+    3. 20768 (0.199510)
+	creators.id
+		Hucka-M
+	creators.name.family
+		Hucka
+	creators.name.given
+		Michael
+	creators.orcid
+		0000-0001-9105-5960
+	keywords
+		Biotechnology, Bioinformatics ; systems biology ; structured data formats ; network diagrams ; standards ; modelling ; XML ; SBML ; SBGN ; databases
+
+	funders.items.agency
+		[JST-ERATO (Japan Science and Technology Agency-Exploratory Research for Advanced Technology)  Kitano Symbiotic Systems Project (Japan) (to 2003) National Institute of General Medical Sciences NSF International Joint Research Program of NEDO (New Energy and Industrial Technology Development Organization) (Japan) JST (Japan Science and Technology Agency) ERATO-SORST (Exploratory Research for Advanced Technology-Solution-Oriented Research for Science and Technology) Program (Japan) Japanese Ministry of Agriculture Japanese Ministry of Education, Culture, Sports, Science and Technology BBSRC (Biotechnology and Biological Sciences Research Council) e-Science Initiative (UK) DARPA (Defense Advanced Research Projects Agency) IPTO ( Information Processing Techniques Office) Bio-Computation Program  Air Force Office of Scientific Research STRI (Science and Technology Research Institute), University of Hertfordshire (UK) Beckman Institute, Caltech Molecular Sciences Institute]
+	title
+		Evolving standards and infrastructure for systems biology: SBML, SBGN, and BioModels.net
+    4. 15322 (0.169129)
+	creators.id
+		[Le-Novère-N Hucka-M Mi-Huaiyu Moodie-S Schreiber-F Sorokin-A Demir-E Wegner-K Aladjem-M-I Wimalaratne-S-M Bergman-F-T Gauges-R Ghazal-P Kawaji-Hideya Li-Lu Matsuoka-Yukiko Villéger-A Boyd-S-E Calzone-L Courtot-M Dogrusoz-U Freeman-T-C Funahashi-Akira Ghosh-S Jouraku-Akiya Kim-Sohyoung Kolpakov-F Luna-A Sahle-S Schmidt-E Watterson-S Wu-Guanming Goryanin-I Kell-D-B Sander-C Sauro-H-M Snoep-J-L Kohn-K Kitano-Hiroaki]
+	creators.name.family
+		[Le Novère Hucka Mi Moodie Schreiber Sorokin Demir Wegner Aladjem Wimalaratne Bergman Gauges Ghazal Kawaji Li Matsuoka Villéger Boyd Calzone Courtot Dogrusoz Freeman Funahashi Ghosh Jouraku Kim Kolpakov Luna Sahle Schmidt Watterson Wu Goryanin Kell Sander Sauro Snoep Kohn Kitano]
+	creators.name.given
+		[Nicolas Michael Huaiyu Stuart Falk Anatoly Emek Katja Mirit I. Sarala M. Frank T. Ralph Peter Hideya Lu Yukiko Alice Sarah E. Laurence Melanie Ugur Tom C. Akira Samik Akiya Sohyoung Fedor Augustin Sven Esther Steven Guanming Igor Douglas B. Chris Herbert Jacky L. Kurt Hiroaki]
+	creators.orcid
+		0000-0001-9105-5960
+	funders.items.agency
+		[New Energy and Industrial Technology Development Organization Biotechnology and Biological Sciences Research Council (BBSRC) National Institute of Advanced Industrial Science and Technology Okinawa Institute of Science and Technology European Media Laboratory Caltech Beckman Institute Japan Science and Technology Agency Ministry of Education, Culture, Sports, Science and Technology (MEXT) Engineering and Physical Sciences Research Council (EPSRC) NIH National Cancer Institute]
+	funders.items.grant_number
+		1R01GM081070-01
+	title
+		The Systems Biology Graphical Notation
+    5. 36338 (0.155107)
+	keywords
+		Bioinformatics, Data Standards
+	funders.items.agency
+		[NIH NIH National Human Genome Research Institute  International Joint Research Program of NEDO (Japan) JST ERATO-SORST Program (Japan) Ministry of Agriculture (Japan) Ministry of Education, Culture, Sports, Science and Technology (MEXT) Biotechnology and Biological Sciences Research Council (BBSRC) Defense Advanced Research Projects Agency (DARPA) Air Force Office of Scientific Research (AFOSR) Caltech University of Hertfordshire (UK) Molecular Sciences Institute  Systems Biology Institute (Japan)]
+	funders.items.grant_number
+		[GM070923 GM077671]
+	title
+		Systems Biology Markup Language (SBML) Level 2: Structures and Facilities for Model Definitions
+	creators.id
+		[Hucka-M Finney-A-M Hoops-S Keating-S-M Le-Novère-N]
+	creators.name.family
+		[Hucka Finney Hoops Keating Le Novère]
+	creators.name.given
+		[Michael Andrew M. Stefan Sarah M. Nicolas]
+	creators.orcid
+		0000-0001-9105-5960
+    6. 36335 (0.144083)
+	title
+		Systems Biology Markup Language (SBML) Level 2: Structures and Facilities for Model Definitions
+	creators.id
+		[Hucka-M Hoops-S Keating-S-M Le-Novère-N Sahle-S Wilkinson-D-J]
+	creators.name.family
+		[Hucka Hoops Keating Le Novère Sahle Wilkinson]
+	creators.name.given
+		[Michael Stefan Sarah M. Nicolas Sven Darren J.]
+	creators.orcid
+		0000-0001-9105-5960
+	keywords
+		Bioinformatics, Data Standards
+	funders.items.agency
+		[NIH NIH National Human Genome Research Institute  International Joint Research Program of NEDO (Japan) JST ERATO-SORST Program (Japan) Ministry of Agriculture (Japan) Ministry of Education, Culture, Sports, Science and Technology (MEXT) Biotechnology and Biological Sciences Research Council (BBSRC) Defense Advanced Research Projects Agency (DARPA) Air Force Office of Scientific Research (AFOSR) Caltech European Molecular Biology Laboratory (EMBL) Molecular Sciences Institute  University of Heidelberg University of Hertfordshire University of Newcastle Systems Biology Institute (Japan) Virginia Bioinformatics Institute]
+	funders.items.grant_number
+		[GM070923 GM077671]
+    7. 85360 (0.138968)
+	keywords
+		SBML; modeling; computational biology; systems biology; standards
+	funders.items.agency
+		[Japan Science and Technology Agency (JST) NIH NIH National Human Genome Research Institute International Joint Research Program of NEDO (Japan) Ministry of Agriculture (Japan) Ministry of Education, Culture, Sports, Science and Technology (MEXT) Biotechnology and Biological Sciences Research Council (BBSRC) Defense Advanced Research Projects Agency (DARPA) Army Research Office (ARO) Air Force Office of Scientific Research (AFOSR) Caltech Beckman Institute EML Research gGmbH (Germany) University of Heidelberg European Molecular Biology Laboratory (EMBL) Molecular Sciences Institute University of Hertfordshire University of Newcastle Systems Biology Institute (Japan) Virginia Bioinformatics Institute]
+	funders.items.grant_number
+		[GM070923 GM077671]
+	title
+		The Systems Biology Markup Language (SBML): Language Specification for Level 3 Version 2 Core
+	creators.id
+		[Hucka-M Bergmann-F-T Dräger-A Hoops-S Keating-S-M Le-Novère-N Myers-C-J Olivier-B-G Sahle-S Schaff-J-C Smith-L-P Waltemath-D Wilkinson-D-J]
+	creators.name.family
+		[Hucka Bergmann Dräger Hoops Keating Le Novère Myers Olivier Sahle Schaff Smith Waltemath Wilkinson]
+	creators.name.given
+		[Michael Frank T. Andreas Stefan Sarah M. Nicolas Chris J. Brett G. Sven James C. Lucian P. Dagmar Darren J.]
+	creators.orcid
+		[0000-0001-9105-5960 0000-0002-5293-5321 0000-0001-7002-6386 0000-0002-5886-5563]
+    8. 85862 (0.095332)
+	creators.id
+		[Schreiber-F Bader-G-D Gleeson-P Golebiewski-M Hucka-M Keating-S-M Le-Novère-N Myers-C-J Nickerson-D-P Sommer-B Waltemath-D]
+	creators.name.family
+		[Schreiber Bader Gleeson Golebiewski Hucka Keating Le Novère Myers Nickerson Sommer Waltemath]
+	creators.name.given
+		[Falk Gary D. Padraig Martin Michael Sarah M. Nicolas Chris David Björn Dagmar]
+	creators.orcid
+		[0000-0001-9105-5960 0000-0002-5886-5563]
+	keywords
+		COMBINE; Systems Biology; Synthetic Biology; Standards
+	funders.items.agency
+		[Bundesministerium für Wirtschaft und Energie (BMWi) Bundesministerium für Bildung und Forschung (BMBF) Klaus Tschira Foundation NSF NSF NSF Aotearoa Foundation NIH Biotechnology and Biological Sciences Research Council (BBSRC) Biotechnology and Biological Sciences Research Council (BBSRC) Biotechnology and Biological Sciences Research Council (BBSRC) Bundesministerium für Bildung und Forschung (BMBF) Bundesministerium für Bildung und Forschung (BMBF)]
+	funders.items.grant_number
+		[FKZ 01FS14019 FKZ 031L0056 CCF-1522074 CCF-1218095 DBI-1356041 R01GM070923 BB/P013384/1 BB/P013406/1 BB/P013414/1 FKZ 0316194 FKZ 0316181]
+	title
+		Specifications of Standards in Systems and Synthetic Biology: Status and Developments in 2017
+    9. 81190 (0.088290)
+	creators.name.family
+		Hucka
+	creators.name.given
+		Michael
+	creators.orcid
+		0000-0001-9105-5960
+	keywords
+		SBML; XML; Data formats; Software; Simulation; Systems biology; Computational biology
+	funders.items.agency
+		[NIH National Institute of General Medical Sciences]
+	funders.items.grant_number
+		R01 GM070923
+	title
+		SBMLPkgSpec: a LaTeX style file for SBML package specification documents
+	creators.id
+		Hucka-M
+   10. 69034 (0.064607)
+	funders.items.agency
+		[Volkswagon Foundation James S. McDonnell Foundation NSF Australian Research Council]
+	funders.items.grant_number
+		[88495 MCB-1548123 CE140100036]
+	title
+		Toward community standards and software for whole-cell modeling
+
+	creators.id
+		[Waltemath-D Karr-Jonathan-R Bergmann-F-T Chelliah-V Hucka-M Krantz-M Liebermeister-W Mendes-P Myers-C-J Pir-Pinar Alaybeyoglu-B Aranganathan-N-K Baghalian-K Bittig-A-T Burke-P-E-P Cantarelli-M Chew-Yin-Hoon Costa-Rafael-S Cursons-J Czauderna-T Goldbert-A-P Gómez-H-F Hahn-J Hameri-Tuure Gardiol-D-F-H Kazakiewicz-D Kiselev-I Knight-Schrijver-V Knuepfer-C Koenig-M Lee-Daewon Lloret-Villas-A Mandrik-N Medley-J-K Moreau-B Naderi-Meshkin-H Palaniappan-S-K Priego-Espinosa-D Scharm-M Sharma-M Smallbone-K Stanford-N-J Song-Je-Hoon Theile-T Tokic-M Tomar-N Toure-V Uhlendorf-J Varusai-T-M Watanabe-Leandro-H Wendland-F Wolfien-M Yurkovich-J-T Zhu-Yan Zardilis-A Zhukova-A Schreiber-F]
+	creators.name.family
+		[Waltemath Karr Bergmann Chelliah Hucka Krantz Liebermeister Mendes Myers Pir Alaybeyoglu Aranganathan Baghalian Bittig Burke Cantarelli Chew Costa Cursons Czauderna Goldberg Gómez Hahn Hameri Gardiol Kazakiewicz Kiselev Knight-Schrijver Knuepfer Koenig Lee Lloret-Villas Mandrik Medley Moreau Naderi-Meshkin Palaniappan Priego-Espinosa Scharm Sharma Smallbone Stanford Song Theile Tokic Tomar Toure Uhlendorf Varusai Watanabe Wendland Wolfien Yurkovich Zhu Zardilis Zhukova Schreiber]
+	creators.name.given
+		[Dagmar Jonathan R. Frank T. Vijayalakshmi Michael Marcus Wolfram Pedro Chris J. Pinar Begum Naveen K. Kambiz Arne T. Paulo E. Pinto Matteo Yin Hoon Rafael S. Joseph Tobias Arthur P. Harold F. Jens Tuure Daniel F. Hernandez Denis Ilya Vincent Christian Matthias Daewon Audald Nikita J. Kyle Bertrand Hojjat Sucheendra K. Daniel Martin Mahesh Kieran Natalie J. Je-Hoon Tom Milenko Namrata Vasundra Jannis Thawfeek M. Leandro H. Florian Markus James T. Yan Argyris Anna Falk]
+	creators.orcid
+		[0000-0002-5886-5563 0000-0001-9105-5960]
+	keywords
+		Whole-cell modeling, Systems biology, Computational
+biology, Simulation, Standards, Education
+
+   11. 15225 (0.063398)
+	funders.items.grant_number
+		[01GS08134 0313080 L 23-7532.24-4-18/1]
+	title
+		SBML2LATEX: Conversion of SBML files into human-readable reports
+	creators.id
+		[Dräger-A Planatscher-H Wouamba-D-M Schröder-A Hucka-M Endler-L Golebiewski-M Müller-W Zell-A]
+	creators.name.family
+		[Dräger Planatscher Wouamba Schröder Hucka Endler Golebiewski Müller Zell]
+	creators.name.given
+		[Andreas Hannes Dieudonné Motsou Adrian Michael Lukas Martin Wolfgang Andreas]
+	creators.orcid
+		0000-0001-9105-5960
+	funders.items.agency
+		[Bundesministerium für Bildung und Forschung (BMBF) National Genome Research Network HepatoSys Tübinger Bioinformatik-Grid]
+   12. 58566 (0.063281)
+	creators.orcid
+		0000-0001-9105-5960
+	funders.items.agency
+		[NIH European Union Biotechnology and Biological Sciences Research Council (BBSRC) NSF Marie Curie International Outgoing Fellowship EU 7th Framework Program for Research and Technological Development  Bundesministerium für Bildung und Forschung (BMBF) Deutsche Forschungsgemeinschaft (DFG) Novo Nordisk Foundation University of Tuebingen]
+	funders.items.grant_number
+		[GM070923 FP7 242167 BBS/E/B/000C0419 CCF-1218095 AMBiCon 332020 0315756]
+	title
+		JSBML 1.0: providing a smorgasbord of options to encode systems biology models
+	creators.id
+		[Rodriguez-N Thomas-A Watanabe-Leandro-H Vazirabad-I-Y Kofia-V Gómez-H-F Mittag-F Matthes-J Rudolph-J Wrzodek-F Netz-E Diamantikos-A Eichner-J Keller-R Wrzodek-C Fröhlich-S Lewis-N-E Myers-C-J Le-Novère-N Palsson-B-Ø Hucka-M Dräger-A]
+	creators.name.family
+		[Rodriguez Thomas Watanabe Vazirabad Kofia Gómez Mittag Matthes Rudolph Wrzodek Netz Diamantikos Eichner Keller Wrzodek Fröhlich Lewis Myers Le Novère Palsson Hucka Dräger]
+	creators.name.given
+		[Nicolas Alex Leandro Ibrahim Y. Victor Harold F. Florian Jakob Jan Finja Eugen Alexander Johannes Roland Clemens Sebastian Nathan E. Chris J. Nicolas Bernhard Ø. Michael Andreas]
+
+$ # This is a JSON version of the results
+$ dataset -p -json find articles.bleve 'National Science Foundation'
+{
+    "status": {
+        "total": 1,
+        "failed": 0,
+        "successful": 1
+    },
+    "request": {
+        "query": {
+            "query": "National Science Foundation"
+        },
+        "size": 12,
+        "from": 0,
+        "highlight": null,
+        "fields": [
+            "*"
+        ],
+        "facets": null,
+        "explain": false,
+        "sort": [
+            "-_score"
+        ],
+        "includeLocations": false
+    },
+    "hits": [
+        {
+            "index": "articles.bleve",
+            "id": "39087",
+            "score": 0.5387647251853918,
+            "sort": [
+                "_score"
+            ],
+            "fields": {
+                "creators.id": [
+                    "Thiele-I",
+                    "Hucka-M"
+                ],
+                "creators.name.family": [
+                    "Thiele",
+                    "Hucka"
+                ],
+                "creators.name.given": [
+                    "Ines",
+                    "Michael"
+                ],
+                "creators.orcid": "0000-0001-9105-5960",
+                "funders.items.agency": [
+                    "Marie Curie Fellowship",
+                    "European Research Council (ERC)",
+                    "Rannis research grant",
+                    "Biotechnology and Biological Sciences Research Council (BBSRC)",
+                    "Engineering and Physical Sciences Research Council (EPSRC)",
+                    "Bioprocessing Research Industry Club ",
+                    "European Union",
+                    "Knut and Alice Wallenberg Foundation",
+                    "Biotechnology and Biological Sciences Research Council (BBSRC)",
+                    "Biotechnology and Biological Sciences Research Council (BBSRC)",
+                    "Bundesministerium für Bildung und Forschung (BMBF)",
+                    "Bundesministerium für Bildung und Forschung (BMBF)",
+                    "NIH",
+                    "NSF",
+                    "Cystic Fibrosis Research Foundation",
+                    "National Cancer Institute",
+                    "Science and Technology Facilities Council (STFC)",
+                    "NIH",
+                    "NIH",
+                    "Netherlands Bioinformatics Centre BioRange programme",
+                    "Netherlands Genomics Initiative"
+                ],
+                "funders.items.grant_number": [
+                    "249261",
+                    "232816",
+                    "100406022",
+                    "BB/C008219/1",
+                    "201142",
+                    "BB/F005938",
+                    "BB/F00561X",
+                    "0315756",
+                    "0315741",
+                    "GM088244",
+                    "CBET-0643548",
+                    "1060",
+                    "R01GM070923",
+                    "R01GM080219",
+                    "SP1.2.4"
+                ],
+                "title": "A community-driven global reconstruction of human metabolism"
+            }
+        },
+        {
+            "index": "articles.bleve",
+            "id": "20769",
+            "score": 0.2236113693811635,
+            "sort": [
+                "_score"
+            ],
+            "fields": {
+                "creators.id": "Hucka-M",
+                "creators.name.family": "Hucka",
+                "creators.name.given": "Michael",
+                "creators.orcid": "0000-0001-9105-5960",
+                "funders.items.agency": [
+                    "National Institute of General Medical Sciences (USA)",
+                    "JST (Japan Science and Technology Agency) ERATO (Exploratory Research for Advanced Technology) Kitano Symbiotic Systems Project (Japan)",
+                    "NSF",
+                    "International Joint Research Program of NEDO (Japan)",
+                    "JST (Japan Science and Technology Agency) ERATO (Exploratory Research for Advanced Technology) SORTS (Solution Oriented Research for Science and Technology) Program",
+                    "Japanese Ministry of Agriculture",
+                    "Japanese Ministry of Education,  Culture, Sports, Science and Technology",
+                    "Biotechnology and Biological Sciences Research Council (BBSRC) e-Science Initiative (UK)",
+                    "DARPA (Defense Advanced Research Projects Agency) IPTO ( Information Processing Techniques Office) Bio-Computation Program ",
+                    "Air Force Office of Scientific Research",
+                    "STRI (Science and Technology Research Institute), University of Hertfordshire (UK)",
+                    "Beckman Institute, Caltech"
+                ],
+                "keywords": "biotechnology, Bioinformatics",
+                "title": "SBML, BioModels.net, and SBGN"
+            }
+        },
+        {
+            "index": "articles.bleve",
+            "id": "20768",
+            "score": 0.1995100364370863,
+            "sort": [
+                "_score"
+            ],
+            "fields": {
+                "creators.id": "Hucka-M",
+                "creators.name.family": "Hucka",
+                "creators.name.given": "Michael",
+                "creators.orcid": "0000-0001-9105-5960",
+                "funders.items.agency": [
+                    "JST-ERATO (Japan Science and Technology Agency-Exploratory Research for Advanced Technology)  Kitano Symbiotic Systems Project (Japan) (to 2003)",
+                    "National Institute of General Medical Sciences",
+                    "NSF",
+                    "International Joint Research Program of NEDO (New Energy and Industrial Technology Development Organization) (Japan)",
+                    "JST (Japan Science and Technology Agency) ERATO-SORST (Exploratory Research for Advanced Technology-Solution-Oriented Research for Science and Technology) Program (Japan)",
+                    "Japanese Ministry of Agriculture",
+                    "Japanese Ministry of Education, Culture, Sports, Science and Technology",
+                    "BBSRC (Biotechnology and Biological Sciences Research Council) e-Science Initiative (UK)",
+                    "DARPA (Defense Advanced Research Projects Agency) IPTO ( Information Processing Techniques Office) Bio-Computation Program ",
+                    "Air Force Office of Scientific Research",
+                    "STRI (Science and Technology Research Institute), University of Hertfordshire (UK)",
+                    "Beckman Institute, Caltech",
+                    "Molecular Sciences Institute"
+                ],
+                "keywords": "Biotechnology, Bioinformatics ; systems biology ; structured data formats ; network diagrams ; standards ; modelling ; XML ; SBML ; SBGN ; databases\n",
+                "title": "Evolving standards and infrastructure for systems biology: SBML, SBGN, and BioModels.net"
+            }
+        },
+        {
+            "index": "articles.bleve",
+            "id": "15322",
+            "score": 0.16912862072165258,
+            "sort": [
+                "_score"
+            ],
+            "fields": {
+                "creators.id": [
+                    "Le-Novère-N",
+                    "Hucka-M",
+                    "Mi-Huaiyu",
+                    "Moodie-S",
+                    "Schreiber-F",
+                    "Sorokin-A",
+                    "Demir-E",
+                    "Wegner-K",
+                    "Aladjem-M-I",
+                    "Wimalaratne-S-M",
+                    "Bergman-F-T",
+                    "Gauges-R",
+                    "Ghazal-P",
+                    "Kawaji-Hideya",
+                    "Li-Lu",
+                    "Matsuoka-Yukiko",
+                    "Villéger-A",
+                    "Boyd-S-E",
+                    "Calzone-L",
+                    "Courtot-M",
+                    "Dogrusoz-U",
+                    "Freeman-T-C",
+                    "Funahashi-Akira",
+                    "Ghosh-S",
+                    "Jouraku-Akiya",
+                    "Kim-Sohyoung",
+                    "Kolpakov-F",
+                    "Luna-A",
+                    "Sahle-S",
+                    "Schmidt-E",
+                    "Watterson-S",
+                    "Wu-Guanming",
+                    "Goryanin-I",
+                    "Kell-D-B",
+                    "Sander-C",
+                    "Sauro-H-M",
+                    "Snoep-J-L",
+                    "Kohn-K",
+                    "Kitano-Hiroaki"
+                ],
+                "creators.name.family": [
+                    "Le Novère",
+                    "Hucka",
+                    "Mi",
+                    "Moodie",
+                    "Schreiber",
+                    "Sorokin",
+                    "Demir",
+                    "Wegner",
+                    "Aladjem",
+                    "Wimalaratne",
+                    "Bergman",
+                    "Gauges",
+                    "Ghazal",
+                    "Kawaji",
+                    "Li",
+                    "Matsuoka",
+                    "Villéger",
+                    "Boyd",
+                    "Calzone",
+                    "Courtot",
+                    "Dogrusoz",
+                    "Freeman",
+                    "Funahashi",
+                    "Ghosh",
+                    "Jouraku",
+                    "Kim",
+                    "Kolpakov",
+                    "Luna",
+                    "Sahle",
+                    "Schmidt",
+                    "Watterson",
+                    "Wu",
+                    "Goryanin",
+                    "Kell",
+                    "Sander",
+                    "Sauro",
+                    "Snoep",
+                    "Kohn",
+                    "Kitano"
+                ],
+                "creators.name.given": [
+                    "Nicolas",
+                    "Michael",
+                    "Huaiyu",
+                    "Stuart",
+                    "Falk",
+                    "Anatoly",
+                    "Emek",
+                    "Katja",
+                    "Mirit I.",
+                    "Sarala M.",
+                    "Frank T.",
+                    "Ralph",
+                    "Peter",
+                    "Hideya",
+                    "Lu",
+                    "Yukiko",
+                    "Alice",
+                    "Sarah E.",
+                    "Laurence",
+                    "Melanie",
+                    "Ugur",
+                    "Tom C.",
+                    "Akira",
+                    "Samik",
+                    "Akiya",
+                    "Sohyoung",
+                    "Fedor",
+                    "Augustin",
+                    "Sven",
+                    "Esther",
+                    "Steven",
+                    "Guanming",
+                    "Igor",
+                    "Douglas B.",
+                    "Chris",
+                    "Herbert",
+                    "Jacky L.",
+                    "Kurt",
+                    "Hiroaki"
+                ],
+                "creators.orcid": "0000-0001-9105-5960",
+                "funders.items.agency": [
+                    "New Energy and Industrial Technology Development Organization",
+                    "Biotechnology and Biological Sciences Research Council (BBSRC)",
+                    "National Institute of Advanced Industrial Science and Technology",
+                    "Okinawa Institute of Science and Technology",
+                    "European Media Laboratory",
+                    "Caltech Beckman Institute",
+                    "Japan Science and Technology Agency",
+                    "Ministry of Education, Culture, Sports, Science and Technology (MEXT)",
+                    "Engineering and Physical Sciences Research Council (EPSRC)",
+                    "NIH",
+                    "National Cancer Institute"
+                ],
+                "funders.items.grant_number": "1R01GM081070-01",
+                "title": "The Systems Biology Graphical Notation"
+            }
+        },
+        {
+            "index": "articles.bleve",
+            "id": "36338",
+            "score": 0.15510664214235984,
+            "sort": [
+                "_score"
+            ],
+            "fields": {
+                "creators.id": [
+                    "Hucka-M",
+                    "Finney-A-M",
+                    "Hoops-S",
+                    "Keating-S-M",
+                    "Le-Novère-N"
+                ],
+                "creators.name.family": [
+                    "Hucka",
+                    "Finney",
+                    "Hoops",
+                    "Keating",
+                    "Le Novère"
+                ],
+                "creators.name.given": [
+                    "Michael",
+                    "Andrew M.",
+                    "Stefan",
+                    "Sarah M.",
+                    "Nicolas"
+                ],
+                "creators.orcid": "0000-0001-9105-5960",
+                "funders.items.agency": [
+                    "NIH",
+                    "NIH",
+                    "National Human Genome Research Institute ",
+                    "International Joint Research Program of NEDO (Japan)",
+                    "JST ERATO-SORST Program (Japan)",
+                    "Ministry of Agriculture (Japan)",
+                    "Ministry of Education, Culture, Sports, Science and Technology (MEXT)",
+                    "Biotechnology and Biological Sciences Research Council (BBSRC)",
+                    "Defense Advanced Research Projects Agency (DARPA)",
+                    "Air Force Office of Scientific Research (AFOSR)",
+                    "Caltech",
+                    "University of Hertfordshire (UK)",
+                    "Molecular Sciences Institute ",
+                    "Systems Biology Institute (Japan)"
+                ],
+                "funders.items.grant_number": [
+                    "GM070923",
+                    "GM077671"
+                ],
+                "keywords": "Bioinformatics, Data Standards",
+                "title": "Systems Biology Markup Language (SBML) Level 2: Structures and Facilities for Model Definitions"
+            }
+        },
+        {
+            "index": "articles.bleve",
+            "id": "36335",
+            "score": 0.14408256578060089,
+            "sort": [
+                "_score"
+            ],
+            "fields": {
+                "creators.id": [
+                    "Hucka-M",
+                    "Hoops-S",
+                    "Keating-S-M",
+                    "Le-Novère-N",
+                    "Sahle-S",
+                    "Wilkinson-D-J"
+                ],
+                "creators.name.family": [
+                    "Hucka",
+                    "Hoops",
+                    "Keating",
+                    "Le Novère",
+                    "Sahle",
+                    "Wilkinson"
+                ],
+                "creators.name.given": [
+                    "Michael",
+                    "Stefan",
+                    "Sarah M.",
+                    "Nicolas",
+                    "Sven",
+                    "Darren J."
+                ],
+                "creators.orcid": "0000-0001-9105-5960",
+                "funders.items.agency": [
+                    "NIH",
+                    "NIH",
+                    "National Human Genome Research Institute ",
+                    "International Joint Research Program of NEDO (Japan)",
+                    "JST ERATO-SORST Program (Japan)",
+                    "Ministry of Agriculture (Japan)",
+                    "Ministry of Education, Culture, Sports, Science and Technology (MEXT)",
+                    "Biotechnology and Biological Sciences Research Council (BBSRC)",
+                    "Defense Advanced Research Projects Agency (DARPA)",
+                    "Air Force Office of Scientific Research (AFOSR)",
+                    "Caltech",
+                    "European Molecular Biology Laboratory (EMBL)",
+                    "Molecular Sciences Institute ",
+                    "University of Heidelberg",
+                    "University of Hertfordshire",
+                    "University of Newcastle",
+                    "Systems Biology Institute (Japan)",
+                    "Virginia Bioinformatics Institute"
+                ],
+                "funders.items.grant_number": [
+                    "GM070923",
+                    "GM077671"
+                ],
+                "keywords": "Bioinformatics, Data Standards",
+                "title": "Systems Biology Markup Language (SBML) Level 2: Structures and Facilities for Model Definitions"
+            }
+        },
+        {
+            "index": "articles.bleve",
+            "id": "85360",
+            "score": 0.13896787683842965,
+            "sort": [
+                "_score"
+            ],
+            "fields": {
+                "creators.id": [
+                    "Hucka-M",
+                    "Bergmann-F-T",
+                    "Dräger-A",
+                    "Hoops-S",
+                    "Keating-S-M",
+                    "Le-Novère-N",
+                    "Myers-C-J",
+                    "Olivier-B-G",
+                    "Sahle-S",
+                    "Schaff-J-C",
+                    "Smith-L-P",
+                    "Waltemath-D",
+                    "Wilkinson-D-J"
+                ],
+                "creators.name.family": [
+                    "Hucka",
+                    "Bergmann",
+                    "Dräger",
+                    "Hoops",
+                    "Keating",
+                    "Le Novère",
+                    "Myers",
+                    "Olivier",
+                    "Sahle",
+                    "Schaff",
+                    "Smith",
+                    "Waltemath",
+                    "Wilkinson"
+                ],
+                "creators.name.given": [
+                    "Michael",
+                    "Frank T.",
+                    "Andreas",
+                    "Stefan",
+                    "Sarah M.",
+                    "Nicolas",
+                    "Chris J.",
+                    "Brett G.",
+                    "Sven",
+                    "James C.",
+                    "Lucian P.",
+                    "Dagmar",
+                    "Darren J."
+                ],
+                "creators.orcid": [
+                    "0000-0001-9105-5960",
+                    "0000-0002-5293-5321",
+                    "0000-0001-7002-6386",
+                    "0000-0002-5886-5563"
+                ],
+                "funders.items.agency": [
+                    "Japan Science and Technology Agency (JST)",
+                    "NIH",
+                    "NIH",
+                    "National Human Genome Research Institute",
+                    "International Joint Research Program of NEDO (Japan)",
+                    "Ministry of Agriculture (Japan)",
+                    "Ministry of Education, Culture, Sports, Science and Technology (MEXT)",
+                    "Biotechnology and Biological Sciences Research Council (BBSRC)",
+                    "Defense Advanced Research Projects Agency (DARPA)",
+                    "Army Research Office (ARO)",
+                    "Air Force Office of Scientific Research (AFOSR)",
+                    "Caltech Beckman Institute",
+                    "EML Research gGmbH (Germany)",
+                    "University of Heidelberg",
+                    "European Molecular Biology Laboratory (EMBL)",
+                    "Molecular Sciences Institute",
+                    "University of Hertfordshire",
+                    "University of Newcastle",
+                    "Systems Biology Institute (Japan)",
+                    "Virginia Bioinformatics Institute"
+                ],
+                "funders.items.grant_number": [
+                    "GM070923",
+                    "GM077671"
+                ],
+                "keywords": "SBML; modeling; computational biology; systems biology; standards",
+                "title": "The Systems Biology Markup Language (SBML): Language Specification for Level 3 Version 2 Core"
+            }
+        },
+        {
+            "index": "articles.bleve",
+            "id": "85862",
+            "score": 0.09533217458465534,
+            "sort": [
+                "_score"
+            ],
+            "fields": {
+                "creators.id": [
+                    "Schreiber-F",
+                    "Bader-G-D",
+                    "Gleeson-P",
+                    "Golebiewski-M",
+                    "Hucka-M",
+                    "Keating-S-M",
+                    "Le-Novère-N",
+                    "Myers-C-J",
+                    "Nickerson-D-P",
+                    "Sommer-B",
+                    "Waltemath-D"
+                ],
+                "creators.name.family": [
+                    "Schreiber",
+                    "Bader",
+                    "Gleeson",
+                    "Golebiewski",
+                    "Hucka",
+                    "Keating",
+                    "Le Novère",
+                    "Myers",
+                    "Nickerson",
+                    "Sommer",
+                    "Waltemath"
+                ],
+                "creators.name.given": [
+                    "Falk",
+                    "Gary D.",
+                    "Padraig",
+                    "Martin",
+                    "Michael",
+                    "Sarah M.",
+                    "Nicolas",
+                    "Chris",
+                    "David",
+                    "Björn",
+                    "Dagmar"
+                ],
+                "creators.orcid": [
+                    "0000-0001-9105-5960",
+                    "0000-0002-5886-5563"
+                ],
+                "funders.items.agency": [
+                    "Bundesministerium für Wirtschaft und Energie (BMWi)",
+                    "Bundesministerium für Bildung und Forschung (BMBF)",
+                    "Klaus Tschira Foundation",
+                    "NSF",
+                    "NSF",
+                    "NSF",
+                    "Aotearoa Foundation",
+                    "NIH",
+                    "Biotechnology and Biological Sciences Research Council (BBSRC)",
+                    "Biotechnology and Biological Sciences Research Council (BBSRC)",
+                    "Biotechnology and Biological Sciences Research Council (BBSRC)",
+                    "Bundesministerium für Bildung und Forschung (BMBF)",
+                    "Bundesministerium für Bildung und Forschung (BMBF)"
+                ],
+                "funders.items.grant_number": [
+                    "FKZ 01FS14019",
+                    "FKZ 031L0056",
+                    "CCF-1522074",
+                    "CCF-1218095",
+                    "DBI-1356041",
+                    "R01GM070923",
+                    "BB/P013384/1",
+                    "BB/P013406/1",
+                    "BB/P013414/1",
+                    "FKZ 0316194",
+                    "FKZ 0316181"
+                ],
+                "keywords": "COMBINE; Systems Biology; Synthetic Biology; Standards",
+                "title": "Specifications of Standards in Systems and Synthetic Biology: Status and Developments in 2017"
+            }
+        },
+        {
+            "index": "articles.bleve",
+            "id": "81190",
+            "score": 0.08828984532426568,
+            "sort": [
+                "_score"
+            ],
+            "fields": {
+                "creators.id": "Hucka-M",
+                "creators.name.family": "Hucka",
+                "creators.name.given": "Michael",
+                "creators.orcid": "0000-0001-9105-5960",
+                "funders.items.agency": [
+                    "NIH",
+                    "National Institute of General Medical Sciences"
+                ],
+                "funders.items.grant_number": "R01 GM070923",
+                "keywords": "SBML; XML; Data formats; Software; Simulation; Systems biology; Computational biology",
+                "title": "SBMLPkgSpec: a LaTeX style file for SBML package specification documents"
+            }
+        },
+        {
+            "index": "articles.bleve",
+            "id": "69034",
+            "score": 0.06460704346896695,
+            "sort": [
+                "_score"
+            ],
+            "fields": {
+                "creators.id": [
+                    "Waltemath-D",
+                    "Karr-Jonathan-R",
+                    "Bergmann-F-T",
+                    "Chelliah-V",
+                    "Hucka-M",
+                    "Krantz-M",
+                    "Liebermeister-W",
+                    "Mendes-P",
+                    "Myers-C-J",
+                    "Pir-Pinar",
+                    "Alaybeyoglu-B",
+                    "Aranganathan-N-K",
+                    "Baghalian-K",
+                    "Bittig-A-T",
+                    "Burke-P-E-P",
+                    "Cantarelli-M",
+                    "Chew-Yin-Hoon",
+                    "Costa-Rafael-S",
+                    "Cursons-J",
+                    "Czauderna-T",
+                    "Goldbert-A-P",
+                    "Gómez-H-F",
+                    "Hahn-J",
+                    "Hameri-Tuure",
+                    "Gardiol-D-F-H",
+                    "Kazakiewicz-D",
+                    "Kiselev-I",
+                    "Knight-Schrijver-V",
+                    "Knuepfer-C",
+                    "Koenig-M",
+                    "Lee-Daewon",
+                    "Lloret-Villas-A",
+                    "Mandrik-N",
+                    "Medley-J-K",
+                    "Moreau-B",
+                    "Naderi-Meshkin-H",
+                    "Palaniappan-S-K",
+                    "Priego-Espinosa-D",
+                    "Scharm-M",
+                    "Sharma-M",
+                    "Smallbone-K",
+                    "Stanford-N-J",
+                    "Song-Je-Hoon",
+                    "Theile-T",
+                    "Tokic-M",
+                    "Tomar-N",
+                    "Toure-V",
+                    "Uhlendorf-J",
+                    "Varusai-T-M",
+                    "Watanabe-Leandro-H",
+                    "Wendland-F",
+                    "Wolfien-M",
+                    "Yurkovich-J-T",
+                    "Zhu-Yan",
+                    "Zardilis-A",
+                    "Zhukova-A",
+                    "Schreiber-F"
+                ],
+                "creators.name.family": [
+                    "Waltemath",
+                    "Karr",
+                    "Bergmann",
+                    "Chelliah",
+                    "Hucka",
+                    "Krantz",
+                    "Liebermeister",
+                    "Mendes",
+                    "Myers",
+                    "Pir",
+                    "Alaybeyoglu",
+                    "Aranganathan",
+                    "Baghalian",
+                    "Bittig",
+                    "Burke",
+                    "Cantarelli",
+                    "Chew",
+                    "Costa",
+                    "Cursons",
+                    "Czauderna",
+                    "Goldberg",
+                    "Gómez",
+                    "Hahn",
+                    "Hameri",
+                    "Gardiol",
+                    "Kazakiewicz",
+                    "Kiselev",
+                    "Knight-Schrijver",
+                    "Knuepfer",
+                    "Koenig",
+                    "Lee",
+                    "Lloret-Villas",
+                    "Mandrik",
+                    "Medley",
+                    "Moreau",
+                    "Naderi-Meshkin",
+                    "Palaniappan",
+                    "Priego-Espinosa",
+                    "Scharm",
+                    "Sharma",
+                    "Smallbone",
+                    "Stanford",
+                    "Song",
+                    "Theile",
+                    "Tokic",
+                    "Tomar",
+                    "Toure",
+                    "Uhlendorf",
+                    "Varusai",
+                    "Watanabe",
+                    "Wendland",
+                    "Wolfien",
+                    "Yurkovich",
+                    "Zhu",
+                    "Zardilis",
+                    "Zhukova",
+                    "Schreiber"
+                ],
+                "creators.name.given": [
+                    "Dagmar",
+                    "Jonathan R.",
+                    "Frank T.",
+                    "Vijayalakshmi",
+                    "Michael",
+                    "Marcus",
+                    "Wolfram",
+                    "Pedro",
+                    "Chris J.",
+                    "Pinar",
+                    "Begum",
+                    "Naveen K.",
+                    "Kambiz",
+                    "Arne T.",
+                    "Paulo E. Pinto",
+                    "Matteo",
+                    "Yin Hoon",
+                    "Rafael S.",
+                    "Joseph",
+                    "Tobias",
+                    "Arthur P.",
+                    "Harold F.",
+                    "Jens",
+                    "Tuure",
+                    "Daniel F. Hernandez",
+                    "Denis",
+                    "Ilya",
+                    "Vincent",
+                    "Christian",
+                    "Matthias",
+                    "Daewon",
+                    "Audald",
+                    "Nikita",
+                    "J. Kyle",
+                    "Bertrand",
+                    "Hojjat",
+                    "Sucheendra K.",
+                    "Daniel",
+                    "Martin",
+                    "Mahesh",
+                    "Kieran",
+                    "Natalie J.",
+                    "Je-Hoon",
+                    "Tom",
+                    "Milenko",
+                    "Namrata",
+                    "Vasundra",
+                    "Jannis",
+                    "Thawfeek M.",
+                    "Leandro H.",
+                    "Florian",
+                    "Markus",
+                    "James T.",
+                    "Yan",
+                    "Argyris",
+                    "Anna",
+                    "Falk"
+                ],
+                "creators.orcid": [
+                    "0000-0002-5886-5563",
+                    "0000-0001-9105-5960"
+                ],
+                "funders.items.agency": [
+                    "Volkswagon Foundation",
+                    "James S. McDonnell Foundation",
+                    "NSF",
+                    "Australian Research Council"
+                ],
+                "funders.items.grant_number": [
+                    "88495",
+                    "MCB-1548123",
+                    "CE140100036"
+                ],
+                "keywords": "Whole-cell modeling, Systems biology, Computational\nbiology, Simulation, Standards, Education\n",
+                "title": "Toward community standards and software for whole-cell modeling\n"
+            }
+        },
+        {
+            "index": "articles.bleve",
+            "id": "15225",
+            "score": 0.06339831702320459,
+            "sort": [
+                "_score"
+            ],
+            "fields": {
+                "creators.id": [
+                    "Dräger-A",
+                    "Planatscher-H",
+                    "Wouamba-D-M",
+                    "Schröder-A",
+                    "Hucka-M",
+                    "Endler-L",
+                    "Golebiewski-M",
+                    "Müller-W",
+                    "Zell-A"
+                ],
+                "creators.name.family": [
+                    "Dräger",
+                    "Planatscher",
+                    "Wouamba",
+                    "Schröder",
+                    "Hucka",
+                    "Endler",
+                    "Golebiewski",
+                    "Müller",
+                    "Zell"
+                ],
+                "creators.name.given": [
+                    "Andreas",
+                    "Hannes",
+                    "Dieudonné Motsou",
+                    "Adrian",
+                    "Michael",
+                    "Lukas",
+                    "Martin",
+                    "Wolfgang",
+                    "Andreas"
+                ],
+                "creators.orcid": "0000-0001-9105-5960",
+                "funders.items.agency": [
+                    "Bundesministerium für Bildung und Forschung (BMBF)",
+                    "National Genome Research Network",
+                    "HepatoSys",
+                    "Tübinger Bioinformatik-Grid"
+                ],
+                "funders.items.grant_number": [
+                    "01GS08134",
+                    "0313080 L",
+                    "23-7532.24-4-18/1"
+                ],
+                "title": "SBML2LATEX: Conversion of SBML files into human-readable reports"
+            }
+        },
+        {
+            "index": "articles.bleve",
+            "id": "58566",
+            "score": 0.0632811050148698,
+            "sort": [
+                "_score"
+            ],
+            "fields": {
+                "creators.id": [
+                    "Rodriguez-N",
+                    "Thomas-A",
+                    "Watanabe-Leandro-H",
+                    "Vazirabad-I-Y",
+                    "Kofia-V",
+                    "Gómez-H-F",
+                    "Mittag-F",
+                    "Matthes-J",
+                    "Rudolph-J",
+                    "Wrzodek-F",
+                    "Netz-E",
+                    "Diamantikos-A",
+                    "Eichner-J",
+                    "Keller-R",
+                    "Wrzodek-C",
+                    "Fröhlich-S",
+                    "Lewis-N-E",
+                    "Myers-C-J",
+                    "Le-Novère-N",
+                    "Palsson-B-Ø",
+                    "Hucka-M",
+                    "Dräger-A"
+                ],
+                "creators.name.family": [
+                    "Rodriguez",
+                    "Thomas",
+                    "Watanabe",
+                    "Vazirabad",
+                    "Kofia",
+                    "Gómez",
+                    "Mittag",
+                    "Matthes",
+                    "Rudolph",
+                    "Wrzodek",
+                    "Netz",
+                    "Diamantikos",
+                    "Eichner",
+                    "Keller",
+                    "Wrzodek",
+                    "Fröhlich",
+                    "Lewis",
+                    "Myers",
+                    "Le Novère",
+                    "Palsson",
+                    "Hucka",
+                    "Dräger"
+                ],
+                "creators.name.given": [
+                    "Nicolas",
+                    "Alex",
+                    "Leandro",
+                    "Ibrahim Y.",
+                    "Victor",
+                    "Harold F.",
+                    "Florian",
+                    "Jakob",
+                    "Jan",
+                    "Finja",
+                    "Eugen",
+                    "Alexander",
+                    "Johannes",
+                    "Roland",
+                    "Clemens",
+                    "Sebastian",
+                    "Nathan E.",
+                    "Chris J.",
+                    "Nicolas",
+                    "Bernhard Ø.",
+                    "Michael",
+                    "Andreas"
+                ],
+                "creators.orcid": "0000-0001-9105-5960",
+                "funders.items.agency": [
+                    "NIH",
+                    "European Union",
+                    "Biotechnology and Biological Sciences Research Council (BBSRC)",
+                    "NSF",
+                    "Marie Curie International Outgoing Fellowship EU 7th Framework Program for Research and Technological Development ",
+                    "Bundesministerium für Bildung und Forschung (BMBF)",
+                    "Deutsche Forschungsgemeinschaft (DFG)",
+                    "Novo Nordisk Foundation",
+                    "University of Tuebingen"
+                ],
+                "funders.items.grant_number": [
+                    "GM070923",
+                    "FP7 242167",
+                    "BBS/E/B/000C0419",
+                    "CCF-1218095",
+                    "AMBiCon 332020",
+                    "0315756"
+                ],
+                "title": "JSBML 1.0: providing a smorgasbord of options to encode systems biology models"
+            }
+        }
+    ],
+    "total_hits": 23,
+    "max_score": 0.5387647251853918,
+    "took": 1983668,
+    "facets": null
+}
+$ # This is a version only returning the ids
+$ dataset -ids find articles.bleve 'National Science Foundation'
+39087
+20769
+20768
+15322
+36338
+36335
+85360
+85862
+81190
+69034
+15225
+58566
+$ 
+$ # That's the demo, all done
+$ exit 0
+exit
+
+Script done on 2018-06-07 12:34:45-0600

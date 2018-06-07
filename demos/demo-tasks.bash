@@ -1,29 +1,38 @@
 #!/bin/bash
-
 #
-# Demo Tesks - this is a Bash script to test the command sequence.
+# Demo showing some basic functionality of dataset and
+# some of the programs from datatools.
 #
 
-export AWS_SDK_LOAD_CONFIG=1
 # Unpack some CSV from our Excel Workbook
 xlsx2csv -nl -N demo-data.xlsx | while read -r SHEET; do
-	xlsx2csv -o "${SHEET}.csv" demo-data.xlsx "${SHEET}"
+    xlsx2csv -o "${SHEET}.csv" demo-data.xlsx "${SHEET}"
 done
+
 # Create an initial empty dataset, tree shows the structure on disc
 dataset init friends.ds
 tree friends.ds
 
 # Add an object of my friend Eamonn
 dataset friends.ds create eamonn '{"name":"Eamonn"}'
+
+# This OK meant things worked, set's see what we saved
 dataset -p friends.ds read eamonn
-# the tree command will show the change on disc
+
+# the tree command will show the change on disc, notice eamonn.json 
+# is in a bucket called "aa", json objects are stored in buckets
+# in a round robin fashion, aa to zz
 tree friends.ds
 
 # Let's update the record outside dataset
-dataset -p friends.ds read eamonn >eamonnon.json
-# I am using sed to change my JSON
+dataset -p friends.ds read eamonn >eamonn.json
+
+# I am using sed to change my JSON object
 sed -i.bak -s "s/Eamonn/Eamonn O'Gorman/g" eamonn.json
+
+# Now I am to send my changes back into our collection
 dataset friends.ds update eamonn eamonn.json
+
 # Now check our change
 dataset -p friends.ds read eamonn
 
@@ -35,9 +44,9 @@ dataset friends.ds import-csv friends-with-orcids.csv 1
 dataset friends.ds count
 # What are the keys?
 dataset friends.ds keys
-# What so those records look like
+# What do those records look like
 dataset friends.ds keys | while read -r KEY; do
-	dataset friends.ds read "${KEY}"
+    dataset friends.ds read "${KEY}"
 done
 
 # Can I get just the records with ORCIDS?
@@ -62,18 +71,27 @@ cat orcids.keys | sed -E 's/"//g' | while read -r ORCID; do
 	cat tmp.keys >>"articles.keys"
 done
 
-# We need to do some data clean up first.
-# Now get rid of any "404 page not found" messages
-# Get rid of empty lines
+# We need to do some data clean up.
+#   + Get rid of any "404 page not found" messages
+#   + Get rid of empty lines
+#   + Sort the keys (just so it is easy to track)
 mv articles.keys tmp.keys
 cat tmp.keys | sed -E 's/404 page not found//g' | sort -u -n | sed -E '/^$/d' >articles.keys
 
-# now with each articles.keys and data.keys, if the copy
-# works we should see our friendly "OK"
+# Let's create a new collection called articles.ds where we can
+# save a subset of the articles found in 
+#     s3://dataset.library.caltech.edu/CaltechAUTHORS
 dataset init articles.ds
+
+# Now with each articles.keys we read a JSON object out of our
+# S3 based collection to our local collection.
+# If it works we should see our friendly "OK" for each copy
 cat articles.keys | while read -r KEY; do
-	dataset s3://dataset.library.caltech.edu/CaltechAUTHORS read "${KEY}" | dataset -i - articles.ds create "${KEY}"
+    echo -n "Copying ${KEY} "
+    dataset s3://dataset.library.caltech.edu/CaltechAUTHORS read "${KEY}" | dataset -i - articles.ds create "${KEY}"
 done
+# Now we should see a bunch of articles copied...
+
 
 # Build the indexes
 dataset articles.ds indexer articles.bleve index-defs/articles.json
