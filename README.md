@@ -17,3 +17,5 @@ Caltech Library has a heterogeneous mix of repository systems (e.g. EPrints host
 [Presentation](00-building-software-at-the-edges.html)
 
 [Narration](presentation-script.fountain)
+
+[Bash version of live demo](demos/demo-tasks.bash)
