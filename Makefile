@@ -27,4 +27,8 @@ publish: build
 spellcheck: FORCE
 	aspell -c building-software-at-the-edges.md
 	
+release: FORCE
+	mkdir -p dist
+	zip -r dist/Building-software-at-the-edges-of-heterogeneous-repositories.zip assets css demo *.html *.md *.fountain  *.tmpl Makefile [0-4]\=*
+
 FORCE:
